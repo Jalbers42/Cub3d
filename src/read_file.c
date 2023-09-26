@@ -12,6 +12,30 @@
 
 #include "cub3d.h"
 
+int ft_strlen(char *str)
+{
+    int i;
+
+    i = 0;
+	while (str[i] != '\0')
+		i++;
+    return (i);
+}
+
+int	is_cub_file(char *filename)
+{
+	int i = ft_strlen(filename) - 1;
+    int j = 3;
+    char    *cub_suffix = ".cub";
+
+    while (j >= 0)
+    {
+        if (filename[i--] != cub_suffix[j--])
+            return (0);
+    }
+    return (1);
+}
+
 char	*append_buffer(char *old_str, char *buffer, int bytes_read)
 {	
 	char		*new_str;
@@ -52,25 +76,17 @@ char	*read_file(int fd)
 	return (file_content);
 }
 
-// char	*read_file(int fd)
-// {
-// 	ssize_t		bytes_read;
-// 	char		*buffer;
-// 	ssize_t		BUFFER_SIZE_READFILE;
-// 	static char	*file_content;
+char	*get_file_content(t_game *game, char *file_name)
+{
+	int	fd;
+    char    *file_content;
 
-// 	BUFFER_SIZE_READFILE = 100;
-// 	buffer = malloc(BUFFER_SIZE_READFILE + 1);
-// 	buffer[BUFFER_SIZE_READFILE] = '\0';
-// 	bytes_read = BUFFER_SIZE_READFILE;
-// 	while (bytes_read == BUFFER_SIZE_READFILE)
-// 	{
-// 		bytes_read = read(fd, buffer, BUFFER_SIZE_READFILE);
-// 		if (bytes_read == -1)
-// 			return (0);
-// 		buffer[bytes_read] = '\0';
-// 		file_content = str_to_map(file_content, buffer, bytes_read);
-// 	}
-// 	free (buffer);
-// 	return (file_content);
-// }
+    if (is_cub_file(file_name) == 0)
+        handle_error("No .cub file", game);
+    fd = open(file_name, O_RDONLY);
+	if (fd == -1)
+        handle_error("Cannot open file", game);
+	file_content = read_file(fd);
+		close(fd);
+	return (file_content);
+}
