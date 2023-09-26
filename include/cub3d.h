@@ -26,7 +26,7 @@
 #include <string.h>
 
 typedef struct s_game {
-    char **map;
+    char    **map;
 } t_game;
 t_game          *init_game();
 char	        *read_file(int fd);
