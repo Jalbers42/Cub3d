@@ -17,8 +17,8 @@ NAME = libft.a
 all: $(NAME) 
 
 $(NAME): $(SRC)
-	cc -Werror -Wextra -Wall -c $(SRC)
-	ar -rc $(NAME) $(OBJ)
+	@cc -Werror -Wextra -Wall -c $(SRC)
+	@ar -rc $(NAME) $(OBJ)
 
 clean:
 	@-rm -f $(OBJ)

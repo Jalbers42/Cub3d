@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/26 15:12:05 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
@@ -25,9 +25,21 @@
 // for memset
 #include <string.h>
 
-typedef struct s_game {
-    char **map;
+typedef struct	s_vector {
+
+	double	x;
+	double	y;
+
+} t_vector;
+
+typedef struct	s_game {
+
+	char		**map;
+	t_vector	start_pos; //position of character on the map
+	t_vector	start_dir; //looking direktion of the character on start
+
 } t_game;
+
 t_game          *init_game();
 char	        *read_file(int fd);
 int	            parse_file(t_game *game, char *file_name);
