@@ -36,13 +36,13 @@ int	is_cub_file(char *filename)
     return (1);
 }
 
-char    **create_map(char *file_content)
-{
-    int map_width;
-    int map_height;
-    data->map_width = calc_width(map_str);
-	data->map_height = calc_height(map_str);
-}
+// char    **create_map(char *file_content)
+// {
+//     int map_width;
+//     int map_height;
+//     data->map_width = calc_width(map_str);
+// 	data->map_height = calc_height(map_str);
+// }
 
 int parse_file(t_game *game, char *file_name)
 {
