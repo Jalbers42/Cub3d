@@ -21,12 +21,10 @@ ifeq ($(DEBUG), 1)
    OPTS = -g
 endif
 
-all: libmlx $(NAME)
+all: $(NAME)
 
 libmlx:
-	# @if [ ! -d mlx_linux ]; then \
-		@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4; \
-	# fi
+	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4; \
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
