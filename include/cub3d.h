@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 15:23:06 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 20:22:35 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@
 // for memset
 #include <string.h>
 
+#define BLUE 0x2bdafcFF
+#define	BROWN 0x4a1e06FF
+#define RED 0xFF0000FF
+#define LIGHT_RED 0xdb3232FF
+#define WIDTH 1024
+#define HEIGHT 768
+
 typedef struct	s_vector {
 
 	double	x;
@@ -40,9 +47,12 @@ typedef struct	s_game {
 	char		**map;
 	int			map_width;
     int			map_height;
+	int			screen_width;
+	int			screen_height;
 	t_vector	pos; //position of character on the map
 	t_vector	dir; //looking direktion of the character on start
 	t_vector	plane; //camera plane (set to x = 0; y = 0.66)
+	mlx_image_t		*mlx_img;
 
 } t_game;
 
