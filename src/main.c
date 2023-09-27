@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/27 12:29:00 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
@@ -38,6 +38,8 @@ int	main(int argc, char **argv)
 		handle_error("Wrong number of arguments", NULL);
 	game = init_game();
 	parse_file(game, argv[1]);
+	raycasting(game);
+
 	destroy_game(game);
 
 	// // MLX allows you to define its core behaviour before startup.
@@ -50,8 +52,6 @@ int	main(int argc, char **argv)
 
 	// // Create and display the image.
 	// mlx_image_t* img = mlx_new_image(mlx, 256, 256);
-
-
 
 	// if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 	// 	ft_error();
