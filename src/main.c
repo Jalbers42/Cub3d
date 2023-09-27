@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/27 14:53:54 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
@@ -38,6 +38,8 @@ int	main(int argc, char **argv)
 		handle_error("Wrong number of arguments", NULL);
 	game = init_game();
 	parse_file(game, argv[1]);
+	raycasting(game);
+
 	destroy_game(game);
 
 	// // MLX allows you to define its core behaviour before startup.

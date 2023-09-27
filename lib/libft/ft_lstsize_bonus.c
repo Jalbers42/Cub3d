@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/12 15:06:01 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/13 13:56:14 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+int	ft_lstsize(t_list *lst)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	t_list	*current;
+	int		i;
+
+	current = lst;
+	i = 0;
+	while (current != NULL)
+	{
+		current = current -> next;
+		i++;
+	}
+	return (i);
 }

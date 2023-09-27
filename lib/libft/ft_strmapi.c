@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/10 11:37:35 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/10 11:49:15 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	char			*s_f;
+	unsigned int	i;
+
+	s_f = ft_calloc(ft_strlen(s) + 1, 1);
+	if (s_f == NULL)
+		return (NULL);
+	i = 0;
+	while (s[i])
+	{
+		s_f[i] = (*f)(i, s[i]);
+		i++;
+	}
+	return (s_f);
 }

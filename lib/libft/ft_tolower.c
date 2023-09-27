@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/07 13:50:41 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/07 13:51:17 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+int	ft_tolower(int c)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	if ('A' <= c && c <= 'Z')
+		return (c + 32);
+	return (c);
 }

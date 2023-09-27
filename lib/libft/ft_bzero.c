@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/03 17:00:54 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/09 15:15:46 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+void	ft_bzero(void *s, size_t n)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	size_t			i;
+	unsigned char	*str;
+
+	str = s;
+	i = 0;
+	while (i < n)
+	{
+		str[i] = '\0';
+		i++;
+	}
 }

@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/09 15:04:07 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/09 15:15:38 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+char	*ft_strdup(const char *s)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	char	*dup;
+
+	dup = (char *) malloc(ft_strlen(s) + 1);
+	if (dup == NULL)
+		return (NULL);
+	ft_strlcpy(dup, s, ft_strlen(s) + 1);
+	return (dup);
 }

@@ -1,21 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/14 13:56:29 by ycardona          #+#    #+#             */
+/*   Updated: 2023/06/19 15:21:18 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+int	ft_printf(const char *str, ...)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	va_list		ap;
+	int			i;
+	int			count;
+
+	if (str == NULL)
+		return (-1);
+	va_start(ap, str);
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		while (str[i] != '%' && str[i])
+		{
+			count = ft_printchar(str[i], 1, count);
+			i++;
+		}
+		if (str[i] == '%')
+			count = ft_printi(ap, str[i + 1], count, &i);
+	}
+	va_end(ap);
+	return (count);
 }

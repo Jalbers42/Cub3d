@@ -1,21 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/09 15:39:36 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/09 16:33:10 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	size_t	size;
+	char	*join;
+
+	size = ft_strlen(s1) + ft_strlen(s2);
+	join = malloc(size + 1);
+	if (join == NULL)
+		return (NULL);
+	ft_memcpy(join, s1, ft_strlen(s1));
+	ft_memcpy(join + ft_strlen(s1), s2, ft_strlen(s2));
+	join[size] = '\0';
+	return (join);
 }

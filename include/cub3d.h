@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/27 14:53:24 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
@@ -18,25 +18,40 @@
 #define TOTAL_INPUT_ELEMENTS 7
 
 #include "MLX42/MLX42.h"
+#include "libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <math.h>
 
 // for memset
 #include <string.h>
 
-typedef struct s_game {
-    int     map_width;
-    int     map_height;
-    char    **map;
-    // player position
-    
+typedef struct	s_vector {
+
+	double	x;
+	double	y;
+
+} t_vector;
+
+typedef struct	s_game {
+
+	char		**map;
+	int			map_width;
+    int			map_height;
+	t_vector	pos; //position of character on the map
+	t_vector	dir; //looking direktion of the character on start
+	t_vector	plane; //camera plane (set to x = 0; y = 0.66)
+
 } t_game;
+
 t_game          *init_game();
 char	        *get_file_content(t_game *game, char *file_name);
 int	            parse_file(t_game *game, char *file_name);
 void            handle_error(char *error, t_game *game);
 void            destroy_game(t_game *game);
-int             parse_map(t_game *game, char *file_content);
+void			raycasting(t_game *game);
+
+int             create_map(t_game *game, char *file_content);
 #endif

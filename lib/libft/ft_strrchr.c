@@ -1,21 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_error.c                                     :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/23 16:09:15 by jalbers           #+#    #+#             */
-/*   Updated: 2023/09/27 14:57:36 by ycardona         ###   ########.fr       */
+/*   Created: 2022/12/07 14:29:47 by ycardona          #+#    #+#             */
+/*   Updated: 2022/12/13 13:59:58 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "libft.h"
 
-void	handle_error(char *error, t_game *game)
+char	*ft_strrchr(const char *s, int c)
 {
-	printf("Error: %s", error);
-	if (game != NULL)
-		destroy_game(game);
-	exit(EXIT_FAILURE);
+	int		i;
+	int		r;
+
+	r = -1;
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char) c)
+			r = i;
+		i++;
+	}
+	if ((char) c == '\0')
+		return ((char *) &(s[i]));
+	if (0 <= r && s[r] == (char) c)
+		return ((char *) &(s[r]));
+	return (NULL);
 }
+
+/* int main(void)
+{
+	char s[] = "teste";
+	printf("%p   |  %p\n", ft_strrchr(s, 'e'), strrchr(s, 'e'));
+} */
