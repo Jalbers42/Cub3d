@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 12:29:27 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:39:46 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #define BUFFER_SIZE_READFILE 100
 
 #include "MLX42/MLX42.h"
-//#include "libft/libft.h"
+#include "libft/libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -37,6 +37,8 @@ typedef struct	s_vector {
 typedef struct	s_game {
 
 	char		**map;
+	int			map_width;
+    int			map_height;
 	t_vector	pos; //position of character on the map
 	t_vector	dir; //looking direktion of the character on start
 	t_vector	plane; //camera plane (set to x = 0; y = 0.66)
