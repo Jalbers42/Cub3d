@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 14:53:24 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:23:06 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #define TOTAL_INPUT_ELEMENTS 7
 
 #include "MLX42/MLX42.h"
-#include "libft/libft.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>

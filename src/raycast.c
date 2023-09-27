@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/09/27 14:24:05 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 15:24:31 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	raycasting(t_game *game)
 				drawEnd = game->map_height - 1;
 
 			//choose wall color
-			ColorRGB color;
+			/* ColorRGB color;
 			switch(worldMap[mapX][mapY])
 			{
 				case 1:  color = RGB_Red;    break; //red
@@ -136,10 +136,10 @@ void	raycasting(t_game *game)
 			if(side == 1) {color = color / 2;}
 
 			//draw the pixels of the stripe as a vertical line
-			verLine(x, drawStart, drawEnd, color);
+			verLine(x, drawStart, drawEnd, color); */
 	}
 	//timing for input and FPS counter
-	oldTime = time;
+/* 	oldTime = time;
 	time = getTicks();
 	double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
 	print(1.0 / frameTime); //FPS counter
@@ -183,6 +183,6 @@ void	raycasting(t_game *game)
 	  double oldPlaneX = planeX;
 	  planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
 	  planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-	}
+	} */
   }
 }

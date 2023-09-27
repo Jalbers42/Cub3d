@@ -2,10 +2,11 @@ NAME	:= Game
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror 
 LIBMLX	:= ./lib/MLX42
+LIBFT	:= ./lib/libft
+LIBFT_A	:= lib/libft/libft.a
 
-HEADERS	:= -I ./include -I $(LIBMLX)/include
-LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
-LIBFT	:= lib/libft/libft.a
+HEADERS	:= -I ./include -I $(LIBMLX)/include -I $(LIBFT)
+LIBS	:= $(LIBMLX)/build/libmlx42.a $(LIBFT)/libft.a -ldl -lglfw -pthread -lm
 SRCS	:= $(shell find ./src -iname "*.c")
 OBJDIR	:= .objFiles
 OBJS	:= $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
@@ -22,20 +23,20 @@ ifeq ($(DEBUG), 1)
    OPTS = -g
 endif
 
-all: $(LIBFT) $(NAME)
+all: $(NAME)
 
 libmlx:
 	@cmake $(LIBMLX) -B $(LIBMLX)/build && make -C $(LIBMLX)/build -j4; \
 
-$(LIBFT):
-	@cd lib/libft && make all
+$(LIBFT_A):
+	@cd lib/libft && make
 
 $(OBJDIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 
-$(NAME): $(OBJS)
-	@$(CC) $(OBJS) $(LIBS) $(LIBFT) $(HEADERS) -o $(NAME)
+$(NAME): $(LIBFT_A) $(OBJS)
+	@$(CC) $(OBJS) $(LIBS) $(HEADERS) -o $(NAME)
 	@printf "$(_SUCCESS) $(GREEN)- Executable ready.\n$(RESET)"
 
 clean:
@@ -48,7 +49,7 @@ clean_mlx:
 fclean_libft:
 	@cd lib/libft && make fclean
 
-fclean: clean fclean_libft
+fclean: fclean_libft clean
 	@rm -rf $(NAME)
 	@printf "$(YELLOW)    - Executable removed.$(RESET)\n"
 
