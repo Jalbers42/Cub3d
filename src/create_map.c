@@ -77,7 +77,7 @@ void    fill_map(t_game *game, char *file_content)
     }
 }
 
-int parse_map(t_game *game, char *file_content)
+int create_map(t_game *game, char *file_content)
 {
     game->map_width = calc_max_width(file_content);
     game->map_height = calc_max_height(file_content);

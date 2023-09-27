@@ -46,7 +46,7 @@ char *get_next_element(char *file_content, int element_index)
 void    parse_element(t_game *game, char *element, int element_index)
 {
     if (element_index == TOTAL_INPUT_ELEMENTS)
-        parse_map(game, element);
+        create_map(game, element);
     else
     {
         
