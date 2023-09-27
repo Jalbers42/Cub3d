@@ -38,5 +38,5 @@ char	        *get_file_content(t_game *game, char *file_name);
 int	            parse_file(t_game *game, char *file_name);
 void            handle_error(char *error, t_game *game);
 void            destroy_game(t_game *game);
-int             create_map(t_game *game, char *file_content);
+int             parse_map(t_game *game, char *file_content);
 #endif

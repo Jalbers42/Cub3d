@@ -12,16 +12,6 @@
 
 #include "cub3d.h"
 
-int ft_strlen(char *str)
-{
-    int i;
-
-    i = 0;
-	while (str[i] != '\0')
-		i++;
-    return (i);
-}
-
 int	is_cub_file(char *filename)
 {
 	int i = ft_strlen(filename) - 1;
