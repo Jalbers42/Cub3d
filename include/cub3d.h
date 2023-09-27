@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 14:39:46 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:53:24 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #define BPP sizeof(int32_t)
 #define BUFFER_SIZE_READFILE 100
+#define TOTAL_INPUT_ELEMENTS 7
 
 #include "MLX42/MLX42.h"
 #include "libft/libft.h"
@@ -46,10 +47,11 @@ typedef struct	s_game {
 } t_game;
 
 t_game          *init_game();
-char	        *read_file(int fd);
+char	        *get_file_content(t_game *game, char *file_name);
 int	            parse_file(t_game *game, char *file_name);
 void            handle_error(char *error, t_game *game);
 void            destroy_game(t_game *game);
 void			raycasting(t_game *game);
 
+int             create_map(t_game *game, char *file_content);
 #endif

@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 12:29:00 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:53:54 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int	main(int argc, char **argv)
 
 	// // Create and display the image.
 	// mlx_image_t* img = mlx_new_image(mlx, 256, 256);
-
 	// if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 	// 	ft_error();
 
@@ -63,7 +62,7 @@ int	main(int argc, char **argv)
 
 	// // Register a hook and pass mlx as an optional param.
 	// // NOTE: Do this before calling mlx_loop!
-	// // mlx_loop_hook(mlx, ft_hook, mlx);
+	// mlx_loop_hook(mlx, ft_hook, mlx);
 	
 	// mlx_loop(mlx);
 	// mlx_terminate(mlx);

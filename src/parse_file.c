@@ -12,52 +12,61 @@
 
 #include "cub3d.h"
 
-int ft_strlen(char *str)
+void    print_map(t_game *game)
 {
-    int i;
-
-    i = 0;
-	while (str[i] != '\0')
-		i++;
-    return (i);
-}
-
-int	is_cub_file(char *filename)
-{
-	int i = ft_strlen(filename) - 1;
-    int j = 3;
-    char    *cub_suffix = ".cub";
-
-    while (j >= 0)
+    int y = 0;
+    int x;
+    
+    while (y < game->map_height)
     {
-        if (filename[i--] != cub_suffix[j--])
-            return (0);
+        x = 0;
+        while (x < game->map_width)
+            printf("%c", game->map[y][x++]);
+        printf("\n");
+        y++;
     }
-    return (1);
 }
 
-// char    **create_map(char *file_content)
-// {
-//     int map_width;
-//     int map_height;
-//     data->map_width = calc_width(map_str);
-// 	data->map_height = calc_height(map_str);
-// }
+char *get_next_element(char *file_content, int element_index)
+{
+    static int  i = 0;
+    char        *next_element;
+
+    while (file_content[i] == '\n')
+        i++;
+    next_element = file_content + i;
+    if (element_index == TOTAL_INPUT_ELEMENTS)
+        return (next_element);
+    while (file_content[i] && file_content[i] != '\n')
+        i++;
+    file_content[i++] = '\0';
+    return (next_element);
+}
+
+void    parse_element(t_game *game, char *element, int element_index)
+{
+    if (element_index == TOTAL_INPUT_ELEMENTS)
+        create_map(game, element);
+    else
+    {
+        /* code */
+    }
+}
 
 int parse_file(t_game *game, char *file_name)
 {
-	int		fd;
     char    *file_content;
+    int     element_index = 1;
+    char    *element;
 
-    if (is_cub_file(file_name) == 0)
-        handle_error("No .cub file", game);
-    fd = open(file_name, O_RDONLY);
-	if (fd == -1)
-        handle_error("Cannot open file", game);
-    file_content = read_file(fd);
-    printf("%s", file_content);
-    // create map
-	close(fd);
+    file_content = get_file_content(game, file_name);
+    while (element_index <= TOTAL_INPUT_ELEMENTS)
+    {
+        element = get_next_element(file_content, element_index);
+        parse_element(game, element, element_index);
+        element_index++;
+    }
+    print_map(game);
     free(file_content); 
 	return (0);
 }
