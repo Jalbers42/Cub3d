@@ -18,5 +18,7 @@ t_game  *init_game()
 
     game = malloc(sizeof(t_game));
     game->map = NULL;
+    game->tokens = NULL;
+    game->player_pos_count = 0;
     return (game);
 }

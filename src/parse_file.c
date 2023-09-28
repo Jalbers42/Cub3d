@@ -44,54 +44,87 @@ char *get_next_element(char *file_content, int element_index)
     return (next_element);
 }
 
-char **get_tokens(char *element)
+int count_tokens(char *str, char delimeter)
 {
-    char    **tokens = malloc(sizeof(char*) * 2);
+    int count = 0;
+    int i = 0;
+
+    while (str[i])
+    {
+        if(str[i] != delimeter && (i == 0 || str[i - 1] == delimeter))
+            count++;
+        i++;
+    }
+    return (count);
+}
+
+int insert_tokens(char **tokens, char *str, char delimeter, int number_of_elements)
+{
+    int     token_count = count_tokens(str, delimeter);
     int     i = 0;
     int     j = 0;
 
-    while (element[i] && j < 2)
+    if (token_count != number_of_elements)
+        return (0);
+    while (str[i] && j < token_count)
     {
-        while (element[i] == ' ')
+        while (str[i] == delimeter)
             i++;
-        tokens[j++] = element + i;
-        while (element[i] && element[i] != ' ')
+        tokens[j++] = str + i;
+        while (str[i] && str[i] != delimeter)
             i++;
-        element[i++] = '\0'; 
+        str[i++] = '\0'; 
     }
-    return (tokens);
+    return (1);
+}
+
+int   set_rgb(t_rgb *color, char *str)
+{
+    char    **tokens = malloc(sizeof(char*) * 3);
+    if (!insert_tokens(tokens, str, ',', 3))
+    {
+        free (tokens);
+        return (0);
+    }
+    color->r = ft_atoi(tokens[0]);
+    color->g = ft_atoi(tokens[1]);
+    color->b = ft_atoi(tokens[2]);
+    free(tokens);
+    if (color->r < 0 || color->r > 250 || color->g < 0 || color->g > 250 || color->b < 0 || color->b > 250)
+        return (0);
+    return (1);
 }
 
 void    parse_element(t_game *game, char *element)
 {
     char    *identifiers[6] = {"NO", "SO", "WE", "EA", "F", "C"};
-    char    **tokens = get_tokens(element);
-    int     i = 0;
 
+    game->tokens = malloc(sizeof(char *) * 2);
+    if (!insert_tokens(game->tokens, element, ' ', 2))
+        handle_error("Element has wrong number of arguments", game); 
+    int i = 0;
     while (i < 6)
     {
-        if (strcmp(tokens[0], identifiers[i]) == 0)
+        if (strcmp(game->tokens[0], identifiers[i]) == 0)
             break;
         i++;
     }
     if (i == 0)
-        game->textures.NO = tokens[1];
+        game->textures.NO = game->tokens[1];
     else if (i == 1)
-        game->textures.SO = tokens[1];
+        game->textures.SO = game->tokens[1];
     else if (i == 2)
-        game->textures.WE = tokens[1];
+        game->textures.WE = game->tokens[1];
     else if (i == 3)
-        game->textures.EA = tokens[1];
-    else if (i == 4)
-        game->colors.F = tokens[1];
-    else if (i == 5)
-        game->colors.C = tokens[1];
-    else
-    {
-        free(tokens);
+        game->textures.EA = game->tokens[1];
+    else if (i == 4 && !set_rgb(&game->colors.F, game->tokens[1]))
+        handle_error("Wrong RGB value", game);
+    else if (i == 5 && !set_rgb(&game->colors.C, game->tokens[1]))
+        handle_error("Wrong RGB value", game);
+    else if (i >= 6)
         handle_error("Incorrect element identifier", game);
-    }
-    free (tokens);
+    free (game->tokens);
+    game->tokens = NULL;
 }
 
 int parse_file(t_game *game, char *file_name)
@@ -109,5 +142,6 @@ int parse_file(t_game *game, char *file_name)
             create_map(game, element);
         element_index++;
     }
+    // check for missing texture
 	return (0);
 }

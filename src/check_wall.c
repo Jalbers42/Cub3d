@@ -36,9 +36,9 @@ int is_wall_incomplete(t_game *game, int **map, int y, int x)
     int w = game->map_width;
     int h = game->map_height;
     
-    if (y == 0 || y == h - 1 || x == 0 || x == w - 1)
-        return (0);
     map[y][x] = 3;
+    if (y == 0 || y == h - 1 || x == 0 || x == w - 1)
+        return (1);
     if (map[y][x - 1] == 0 && is_wall_incomplete(game, map, y, x - 1))
         return (1);
     if (map[y][x + 1] == 0 && is_wall_incomplete(game, map, y, x + 1))

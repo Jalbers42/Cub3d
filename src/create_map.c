@@ -16,7 +16,7 @@ int set_map_value(t_game *game, int y, int x, char input)
 {
     
     if (is_invalid_character(input))
-        return (1);
+        handle_error("Invalid map character", game);
     else if (input == ' ')
         game->map[y][x] = 0;
     else if (input == 'N' || input == 'S' || input == 'E' || input == 'W')
@@ -45,6 +45,8 @@ void    fill_map(t_game *game, char *file_content)
         i++;
         y++;
     }
+    if (game->player_pos_count == 0)
+        handle_error("No player starting position found on map", game);
 }
 
 int create_map(t_game *game, char *map_str)

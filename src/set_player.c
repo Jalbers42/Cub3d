@@ -35,13 +35,11 @@ void    set_plane(t_game *game)
 
 void    set_player_pos(t_game *game, int y, int x)
 {
-    static int player_pos_count = 0;
-
-    if (player_pos_count == 1)
+    if (game->player_pos_count == 1)
         handle_error("Multiple player positions on map", game);
     game->pos.y = y;
     game->pos.x = x;
-    player_pos_count++;
+    game->player_pos_count++;
 }
 
 void    set_player_details(t_game *game, int y, int x, char input)

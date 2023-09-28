@@ -41,9 +41,15 @@ typedef struct s_textures {
 	char *EA;
 } t_textures;
 
+typedef struct s_rgb{
+	int	r;
+	int	g;
+	int	b;
+} t_rgb;
+
 typedef struct s_colors{
-	char *F;
-	char *C;
+	t_rgb F;
+	t_rgb C;
 } t_colors;
 
 typedef struct	s_game {
@@ -52,8 +58,10 @@ typedef struct	s_game {
 	int			**map;
 	int			map_width;
     int			map_height;
+	int			player_pos_count;
 	t_textures	textures;
 	t_colors	colors;
+	char		**tokens;
 
 	t_vector	pos; //position of character on the map
 	t_vector	dir; //looking direktion of the character on start
