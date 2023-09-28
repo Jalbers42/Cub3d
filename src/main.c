@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 		handle_error("Wrong number of arguments", NULL);
 	game = init_game();
 	parse_file(game, argv[1]);
-	raycasting(game);
+	// raycasting(game);
 
 	destroy_game(game);
 
