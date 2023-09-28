@@ -6,14 +6,14 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/28 19:21:55 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:41:26 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #define LEFT 0
 #define RIGHT 1
-#define ROT_SPEED 0.1
-#define MOV_SPEED 0.5
+#define ROT_SPEED 0.05
+#define MOV_SPEED 0.2
 
 #include "cub3d.h"
 
