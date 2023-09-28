@@ -1,18 +1,18 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/27 22:20:48 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    print_map(t_game *game)
+/* void    print_map(t_game *game)
 {
     int y = 0;
     int x;
@@ -26,7 +26,7 @@ void    print_map(t_game *game)
         y++;
     }
 }
-
+ */
 char *get_next_element(char *file_content, int element_index)
 {
     static int  i = 0;
@@ -67,7 +67,7 @@ int parse_file(t_game *game, char *file_name)
         parse_element(game, element, element_index);
         element_index++;
     }
-    print_map(game);
+    //print_map(game);
     free(file_content); 
 	return (0);
 }

@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/27 23:12:30 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
@@ -18,5 +18,17 @@ t_game  *init_game()
 
     game = malloc(sizeof(t_game));
     game->map = NULL;
+
+    game->map_width = 25;
+	game->map_height = 10;
+	game->screen_width = WIDTH;
+	game->screen_height = HEIGHT;
+	game->plane.x = -0.66;
+	game->plane.y = 0;
+	game->pos.x = 1.5;
+	game->pos.y = 1.5;
+	game->dir.x = 0;
+	game->dir.y = 1;
+
     return (game);
 }
