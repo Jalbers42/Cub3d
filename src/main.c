@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/28 18:24:52 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/28 19:21:55 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,27 @@ void	ft_rotate(int rot_dir, t_game *game)
 	}
 }
 
+void	ft_rotate_dir(t_vector *dir, int rot_dir)
+{
+	t_vector	old_dir;
+
+	old_dir = *dir;
+	if (rot_dir == MLX_KEY_D)
+	{
+		dir->x = -old_dir.y;
+		dir->y = old_dir.x;
+	}
+	if (rot_dir == MLX_KEY_A)
+	{
+		dir->x = old_dir.y;
+		dir->y = -old_dir.x;
+	}
+}
+
 void	ft_move(int mov_dir, t_game *game)
 {
+	t_vector	temp_dir;
+	
 	if (mov_dir == MLX_KEY_W)
     {
     	if(game->map[(int)game->pos.y][(int)(game->pos.x + game->dir.x * MOV_SPEED)] == '0')
@@ -63,7 +82,15 @@ void	ft_move(int mov_dir, t_game *game)
 		if(game->map[(int)(game->pos.y - game->dir.y * MOV_SPEED)][(int)game->pos.x] == '0')
 			game->pos.y -= game->dir.y * MOV_SPEED;
     }
-
+	if (mov_dir == MLX_KEY_D || mov_dir == MLX_KEY_A)
+	{
+		temp_dir = game->dir;
+		ft_rotate_dir(&temp_dir, mov_dir);
+		if(game->map[(int)game->pos.y][(int)(game->pos.x + temp_dir.x * MOV_SPEED)] == '0')
+	  		game->pos.x += temp_dir.x * MOV_SPEED;
+		if(game->map[(int)(game->pos.y + temp_dir.y * MOV_SPEED)][(int)game->pos.x] == '0')
+	  		game->pos.y += temp_dir.y * MOV_SPEED;
+	}
 }
 void	ft_key_hook(mlx_key_data_t keydata, void* param)
 {
@@ -75,9 +102,9 @@ void	ft_key_hook(mlx_key_data_t keydata, void* param)
 	if (mlx_is_key_down(game->mlx, MLX_KEY_S))
 		ft_move(MLX_KEY_S, game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_D))
-		game->pos.x -= 0.1;
+		ft_move(MLX_KEY_D, game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_A))
-		game->pos.x += 0.1;
+		ft_move(MLX_KEY_A, game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_LEFT))
 		ft_rotate(LEFT, game);
 	if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
