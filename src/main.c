@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/28 19:41:26 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 10:23:49 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,10 +130,17 @@ int	main(int argc, char **argv)
 	mlx_image_t* img = game->mlx_img;
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();
+	//load texture	
+	game->text_x = mlx_load_png("./textures/greystone.png");
+	if (!game->text_x)
+        ft_error();
+	game->text_y = mlx_load_png("./textures/mossy.png");
+	if (!game->text_y)
+        ft_error();
 	raycasting(game);
 	mlx_key_hook(mlx, &ft_key_hook, game);
 	mlx_loop(mlx);
-	mlx_terminate(mlx);
+	mlx_delete_image(mlx, img);
 	destroy_game(game);
 	return (EXIT_SUCCESS);
 }

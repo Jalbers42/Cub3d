@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/09/28 10:24:27 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 11:02:38 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,12 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 }
 
 void	ft_line_height(t_rc_data *rc_data, t_game *game)
-{
-	double	perpWallDist;
-	
+{	
 	if(rc_data->side == 0)
-		perpWallDist = rc_data->side_dist.x - rc_data->d_side_dist.x;
+		rc_data->perpWallDist = rc_data->side_dist.x - rc_data->d_side_dist.x;
 	else          
-		perpWallDist = rc_data->side_dist.y - rc_data->d_side_dist.y;
-	rc_data->line_height = (int)(game->screen_height / perpWallDist);
+		rc_data->perpWallDist = rc_data->side_dist.y - rc_data->d_side_dist.y;
+	rc_data->line_height = (int)(game->screen_height / rc_data->perpWallDist);
 }
 
 void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
@@ -107,10 +105,45 @@ void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 	end = rc_data->line_height / 2 + game->screen_height / 2;
 	if(end >= game->screen_height)
 		end = game->screen_height - 1;	
-	y = 0;
+	
 	color = RED;
 	if (rc_data->side == 1)
 		color = LIGHT_RED;
+	
+/* 	//texturing calculations
+	if (rc_data->side == 0)
+		rc_data->text = game->text_x;
+	else
+		rc_data->text = game->text_y;
+
+    //calculate where exactly the wall was hit
+    double wall_hit;
+    if (rc_data->side == 0)
+		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.y;
+    else
+		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.x;
+    wall_hit -= floor(wall_hit);
+
+	//x coordinate on the texture
+    int tex_x = (int)(wall_hit * (double)rc_data->text.width);
+    if((rc_data->side == 0 && rc_data->ray.x > 0) || (rc_data->side == 1 && rc_data->ray.y < 0))
+		tex_x = rc_data->text.width - tex_x - 1;
+
+      // How much to increase the texture coordinate per screen pixel
+      double step = 1.0 * texHeight / lineHeight;
+      // Starting texture coordinate
+      double texPos = (drawStart - h / 2 + lineHeight / 2) * step;
+      for(int y = drawStart; y<drawEnd; y++)
+      {
+        // Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
+        int texY = (int)texPos & (texHeight - 1);
+        texPos += step;
+        Uint32 color = texture[texNum][texHeight * texY + texX];
+        //make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
+        if(side == 1) color = (color >> 1) & 8355711;
+        buffer[y][x] = color;
+      } */
+	y = 0;
 	while (y < game->screen_height)
 	{
 		if (y < start)
