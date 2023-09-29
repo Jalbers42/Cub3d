@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/29 11:05:07 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 14:32:15 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #define BPP sizeof(int32_t)
 #define BUFFER_SIZE_READFILE 100
 #define TOTAL_INPUT_ELEMENTS 7
+#define FOV 0.66
 
 #include "MLX42/MLX42.h"
 #include "libft.h"
@@ -36,11 +37,27 @@
 #define HEIGHT 768
 
 typedef struct	s_vector {
-
 	double	x;
 	double	y;
-
 } t_vector;
+
+typedef struct s_textures {
+	char *NO;
+	char *SO;
+	char *WE;
+	char *EA;
+} t_textures;
+
+typedef struct s_rgb{
+	int	r;
+	int	g;
+	int	b;
+} t_rgb;
+
+typedef struct s_colors{
+	t_rgb F;
+	t_rgb C;
+} t_colors;
 
 typedef	struct s_rc_data
 {
@@ -61,9 +78,15 @@ typedef	struct s_rc_data
 
 typedef struct	s_game {
 
-	char		**map;
+	char		*file_content;
+	int			**map;
 	int			map_width;
     int			map_height;
+	int			player_pos_count;
+	t_textures	textures;
+	t_colors	colors;
+	char		**tokens;
+
 	int			screen_width;
 	int			screen_height;
 	t_vector	pos; //position of character on the map
@@ -83,6 +106,14 @@ int	            parse_file(t_game *game, char *file_name);
 void            handle_error(char *error, t_game *game);
 void            destroy_game(t_game *game);
 void			raycasting(t_game *game);
-
-int             create_map(t_game *game, char *file_content);
+int				check_wall(t_game *game);
+int             create_map(t_game *game, char *map_str);
+void    		print_map(t_game *game, int **map);
+int				**malloc_map(t_game *game);
+void    		free_map(t_game *game, int **map);
+void			set_player_details(t_game *game, int y, int x, char input);
+int				calc_max_width(char *map_str);
+int				calc_max_height(char *map_str);
+int 			**malloc_map(t_game *game);
+int 			is_invalid_character(char input);
 #endif

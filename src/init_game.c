@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 23:12:30 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 14:32:59 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ t_game  *init_game()
 
     game = malloc(sizeof(t_game));
     game->map = NULL;
+    game->tokens = NULL;
+    game->player_pos_count = 0;
 
     game->map_width = 25;
 	game->map_height = 10;

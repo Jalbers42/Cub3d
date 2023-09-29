@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/29 13:41:39 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/09/29 14:39:22 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int	main(int argc, char **argv)
 		handle_error("Wrong number of arguments", NULL);
 	game = init_game();
 	parse_file(game, argv[1]);
-
 	// MLX allows you to define its core behaviour before startup.
 	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
 	if (!mlx)
@@ -141,6 +140,7 @@ int	main(int argc, char **argv)
 	mlx_key_hook(mlx, &ft_key_hook, game);
 	mlx_loop(mlx);
 	mlx_delete_image(mlx, img);
+
 	destroy_game(game);
 	return (EXIT_SUCCESS);
 }
