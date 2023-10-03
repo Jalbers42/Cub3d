@@ -135,6 +135,7 @@ void	ft_resize_hook(int32_t width, int32_t height, void* param)
 	game->screen_width = width;
 	game->screen_height = height;
 	raycasting(game);
+	
 }
 
 int	main(int argc, char **argv)

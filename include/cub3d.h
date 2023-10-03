@@ -134,5 +134,6 @@ int				calc_max_width(char *map_str);
 int				calc_max_height(char *map_str);
 int 			**malloc_map(t_game *game);
 int 			is_invalid_character(char input);
+int				minimap(t_game *game);
 
 #endif
