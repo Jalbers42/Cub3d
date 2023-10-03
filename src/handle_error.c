@@ -14,7 +14,7 @@
 
 void	handle_error(char *error, t_game *game)
 {
-	printf("Error: %s\n", error);
+	printf("Error: %s", error);
 	if (game != NULL)
 		destroy_game(game);
 	exit(EXIT_FAILURE);

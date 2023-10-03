@@ -6,183 +6,237 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/09/27 15:24:31 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 00:27:39 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+t_rc_data	*ft_init_rc(int x, t_game *game)
+{
+	t_rc_data *rc_data;
+	rc_data = malloc(sizeof(t_rc_data));
+	//calculate x coordinate in camera space
+	rc_data->cam_x = 2 * x / (double)game->screen_width - 1;
+	//calculate ray position and direction
+	rc_data->ray.x = game->dir.x + game->plane.x * rc_data->cam_x;
+	rc_data->ray.y =	game->dir.y + game->plane.y * rc_data->cam_x;
+	//calculate initial d_side_dist
+	if (rc_data->ray.x == 0)
+		rc_data->d_side_dist.x = 1e30; //prevent divion with zero
+	else
+		rc_data->d_side_dist.x = fabs(1 / rc_data->ray.x);
+	if (rc_data->ray.y == 0)
+		rc_data->d_side_dist.y = 1e30;
+	else
+		rc_data->d_side_dist.y = fabs(1 / rc_data->ray.y);
+	//calculate initial field on the map
+	rc_data->field.x = (int)(game->pos.x);
+	rc_data->field.y = (int)(game->pos.y);
+	//calculate step and initial side_dist
+	if(rc_data->ray.x < 0)
+	{
+		rc_data->step.x = -1;
+		rc_data->side_dist.x = (game->pos.x - rc_data->field.x) * rc_data->d_side_dist.x;
+	}
+	else
+	{
+		rc_data->step.x = 1;
+		rc_data->side_dist.x = (rc_data->field.x + 1.0 - game->pos.x) * rc_data->d_side_dist.x;
+	}
+	if(rc_data->ray.y < 0)
+	{
+		rc_data->step.y = -1;
+		rc_data->side_dist.y = (game->pos.y - rc_data->field.y) * rc_data->d_side_dist.y;
+	}
+	else
+	{
+		rc_data->step.y = 1;
+		rc_data->side_dist.y = (rc_data->field.y + 1.0 - game->pos.y) * rc_data->d_side_dist.y;
+	}
+	return (rc_data);
+}
+
+void	ft_dda(t_rc_data *rc_data, t_game *game)
+{
+	int hit; //was there a wall hit?
+
+	hit = 0;
+	while(hit == 0)
+	{
+		//jump to next map square, either in x-direction, or in y-direction
+		if(rc_data->side_dist.x < rc_data->side_dist.y)
+		{
+			rc_data->side_dist.x += rc_data->d_side_dist.x;
+			rc_data->field.x += rc_data->step.x;
+			rc_data->side = 0;
+		}
+		else
+		{
+			rc_data->side_dist.y += rc_data->d_side_dist.y;
+			rc_data->field.y += rc_data->step.y;
+			rc_data->side = 1;
+		}
+		//Check if ray has hit a wall
+		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] != 0) //maybe adjust depending on the type of map
+			hit = 1;
+	}
+}
+
+void	ft_line_height(t_rc_data *rc_data, t_game *game)
+{	
+	if(rc_data->side == 0)
+		rc_data->perpWallDist = rc_data->side_dist.x - rc_data->d_side_dist.x;
+	else          
+		rc_data->perpWallDist = rc_data->side_dist.y - rc_data->d_side_dist.y;
+	rc_data->line_height = (int)(game->screen_height / rc_data->perpWallDist + 0.5);
+}
+
+int	ft_get_pixel(mlx_texture_t* texture, int x, int y)
+{
+	int	offset;
+	
+	if ((int)texture->width <= x)
+		x = texture->width - 1;
+	if ((int)texture->height <= y)
+		y = texture->height - 1;
+	offset = (y * texture->width + x) * texture->bytes_per_pixel;
+    return (texture->pixels[offset] << 24 | texture->pixels[offset + 1] << 16 | texture->pixels[offset + 2] << 8 | texture->pixels[offset + 3]);
+}
+
+int	ft_min(int	a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return b;
+}
+
+// Function to get a column x of pixels from texture
+int	*ft_get_pix_col(t_rc_data *rc_data, t_game *game)
+{
+	int		y;
+	double	step;
+	int		*pix_col;
+
+	pix_col = malloc(ft_min(rc_data->line_height, game->screen_height) * sizeof(int));
+	if (!pix_col)
+        return NULL;
+	if (rc_data->line_height <= game->screen_height)
+		step = 0;
+	else
+		step = (rc_data->line_height - game->screen_height) / 2 * 1.0 * rc_data->text->height / rc_data->line_height;
+	y = 0;
+	while (y < ft_min(rc_data->line_height, game->screen_height))
+	{
+		pix_col[y] = ft_get_pixel(rc_data->text, rc_data->text_hit, (int)(step + 0.5));
+		step += 1.0 * rc_data->text->height / rc_data->line_height;
+		y++;
+	}
+	return (pix_col);
+}
+
+void	ft_set_start_end(t_rc_data *rc_data, t_game *game)
+{
+	rc_data->start = (game->screen_height - rc_data->line_height) / 2;
+	if (rc_data->start < 0)
+		rc_data->start = 0;
+	rc_data->end = (rc_data->line_height + game->screen_height) / 2;
+	if (game->screen_height < rc_data->end)
+		rc_data->end = game->screen_height;	
+}
+
+void	ft_text_hit(t_rc_data *rc_data, t_game *game)
+{
+	double wall_hit;
+	if (rc_data->side == 0)
+		wall_hit = game->pos.y + rc_data->perpWallDist * rc_data->ray.y;
+	else
+		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.x;
+	wall_hit -= (int)(wall_hit);
+	//x coordinate on the texture
+	rc_data->text_hit = (wall_hit * rc_data->text->width);
+}
+
+static void	ft_set_text(t_rc_data *rc_data, t_game *game)
+{
+	//1. Quadrant
+	if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->NO;
+		if (rc_data->side == 0)
+			rc_data->text = game->WE;
+	}
+	//2. Quadrant
+	if (rc_data->ray.x <= 0.0 && 0.0 <= rc_data->ray.y)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->NO;
+		if (rc_data->side == 0)
+			rc_data->text = game->EA;
+	}
+	//3. Quadrant 
+	if (rc_data->ray.x <= 0.0 && rc_data->ray.y <= 0.0)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->SO;
+		if (rc_data->side == 0)
+			rc_data->text = game->EA;
+	}
+	//4. Quadrant 
+	if(0.0 <= rc_data->ray.x && rc_data->ray.y <= 0.0)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->SO;
+		if (rc_data->side == 0)
+			rc_data->text = game->WE;
+	}
+}
+
+void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
+{
+	int	y;
+	int	*text_col;
+
+	//calculate start end end of the wall
+	ft_set_start_end(rc_data, game);
+	//find the correct texture
+	ft_set_text(rc_data, game);
+	//calculate where exactly the wall was hit and where it is on the texture
+	ft_text_hit(rc_data, game);
+	//get the correct column of the texture
+	text_col = ft_get_pix_col(rc_data, game);
+	y = 0;
+	while (y < game->screen_height)
+	{
+		if (y < rc_data->start)
+			mlx_put_pixel(game->mlx_img, x, y, game->c_color);
+		else if (rc_data->end <= y)
+			mlx_put_pixel(game->mlx_img, x, y, game->f_color);
+		else
+			mlx_put_pixel(game->mlx_img, x, y, text_col[y - rc_data->start]);
+		y++;
+	}
+	free(text_col);
+}
+
 void	raycasting(t_game *game)
 {
-	/* double posX = 22, posY = 12;  //x and y start position
- 	double dirX = -1, dirY = 0; //initial direction vector
-  	double planeX = 0, planeY = 0.66; //the 2d raycaster version of camera plane
-	double time = 0; //time of current frame
-	double oldTime = 0; //time of previous frame */
+	t_rc_data	*rc_data;
+	int			x;
 
-	//screen(screenWidth, screenHeight, 0, "Raycaster");
-
-	while(1)
+	x = 0;
+	while(x < game->screen_width)
 	{
-		for(int x = 0; x < game->map_width; x++)
-		{
-	  		//calculate ray position and direction
-			t_vector	ray_dir;	
-			double	cameraX = 2 * x / (double)game->map_width - 1; //x-coordinate in camera space
-			ray_dir.x = game->dir.x + game->plane.x * cameraX;
-			ray_dir.y =	game->dir.y + game->plane.y * cameraX;
-	  		//which box of the map we're in
-	  		int mapX = (int)(game->pos.x);
-	  		int mapY = (int)(game->pos.y);
-
-			t_vector	side_dist;
-	  		t_vector	d_side_dist;
-			if (ray_dir.x == 0)
-				d_side_dist.x = 1e30; //prevent divion with zero
-			else
-				d_side_dist.x = fabs(1 / ray_dir.x);
-			if (ray_dir.y == 0)
-				d_side_dist.y = 1e30;
-			else
-				d_side_dist.y = fabs(1 / ray_dir.y);
-
-			double perpWallDist;
-
-			//what direction to step in x or y-direction (either +1 or -1)
-			int stepX;
-			int stepY;
-			int hit = 0; //was there a wall hit?
-			int side; //was a NS or a EW wall hit?
-			
-			//calculate step and initial sideDist
-			if(ray_dir.x < 0)
-			{
-				stepX = -1;
-				side_dist.x = (game->pos.x - mapX) * d_side_dist.x;
-			}
-			else
-			{
-				stepX = 1;
-				side_dist.x = (mapX + 1.0 - game->pos.x) * d_side_dist.x;
-			}
-
-			if(ray_dir.y < 0)
-			{
-				stepY = -1;
-				side_dist.y = (game->pos.y - mapY) * d_side_dist.y;
-			}
-			
-			else
-			{
-				stepY = 1;
-				side_dist.y = (mapY + 1.0 - game->pos.y) * d_side_dist.y;
-			}
-			//perform DDA
-			while(hit == 0)
-			{
-				//jump to next map square, either in x-direction, or in y-direction
-				if(side_dist.x < side_dist.y)
-				{
-					side_dist.x += d_side_dist.x;
-					mapX += stepX;
-					side = 0;
-				}
-				else
-				{
-					side_dist.y += d_side_dist.y;
-					mapY += stepY;
-					side = 1;
-				}
-				//Check if ray has hit a wall
-				if(game->map[mapX][mapY] != '0') //maybe adjust depending on the type of map
-					hit = 1;
-			}
-	  
-	  //Calculate distance projected on camera direction. This is the shortest distance from the point where the wall is
-	  //hit to the camera plane. Euclidean to center camera point would give fisheye effect!
-	  //This can be computed as (mapX - posX + (1 - stepX) / 2) / rayDirX for side == 0, or same formula with Y
-	  //for size == 1, but can be simplified to the code below thanks to how sideDist and deltaDist are computed:
-	  //because they were left scaled to |rayDir|. sideDist is the entire length of the ray above after the multiple
-	  //steps, but we subtract deltaDist once because one step more into the wall was taken above.
-	  
-			if(side == 0)
-				perpWallDist = side_dist.x - d_side_dist.x;
-			else          
-				perpWallDist = side_dist.y - d_side_dist.y;
-
-			//Calculate height of line to draw on screen
-			int lineHeight = (int)(game->map_height / perpWallDist);
-
-			//calculate lowest and highest pixel to fill in current stripe
-			int drawStart = -lineHeight / 2 + game->map_height / 2;
-			if (drawStart < 0)
-				drawStart = 0;
-			int drawEnd = lineHeight / 2 + game->map_height / 2;
-			if(drawEnd >= game->map_height)
-				drawEnd = game->map_height - 1;
-
-			//choose wall color
-			/* ColorRGB color;
-			switch(worldMap[mapX][mapY])
-			{
-				case 1:  color = RGB_Red;    break; //red
-				case 2:  color = RGB_Green;  break; //green
-				case 3:  color = RGB_Blue;   break; //blue
-				case 4:  color = RGB_White;  break; //white
-				default: color = RGB_Yellow; break; //yellow
-			}
-
-			//give x and y sides different brightness
-			if(side == 1) {color = color / 2;}
-
-			//draw the pixels of the stripe as a vertical line
-			verLine(x, drawStart, drawEnd, color); */
+		rc_data = ft_init_rc(x, game);
+		//perform DDA to find wich field is hit
+		ft_dda(rc_data, game);
+		//calculate line_height
+		ft_line_height(rc_data, game);
+		//draw line
+		ft_draw_line(x, rc_data, game);
+		free(rc_data);
+		x++;
 	}
-	//timing for input and FPS counter
-/* 	oldTime = time;
-	time = getTicks();
-	double frameTime = (time - oldTime) / 1000.0; //frameTime is the time this frame has taken, in seconds
-	print(1.0 / frameTime); //FPS counter
-	redraw();
-	cls();
-
-	//speed modifiers
-	double moveSpeed = frameTime * 5.0; //the constant value is in squares/second
-	double rotSpeed = frameTime * 3.0; //the constant value is in radians/second
-	readKeys();
-	//move forward if no wall in front of you
-	if(keyDown(SDLK_UP))
-	{
-	  if(worldMap[int(posX + dirX * moveSpeed)][int(posY)] == false) posX += dirX * moveSpeed;
-	  if(worldMap[int(posX)][int(posY + dirY * moveSpeed)] == false) posY += dirY * moveSpeed;
-	}
-	//move backwards if no wall behind you
-	if(keyDown(SDLK_DOWN))
-	{
-	  if(worldMap[int(posX - dirX * moveSpeed)][int(posY)] == false) posX -= dirX * moveSpeed;
-	  if(worldMap[int(posX)][int(posY - dirY * moveSpeed)] == false) posY -= dirY * moveSpeed;
-	}
-	//rotate to the right
-	if(keyDown(SDLK_RIGHT))
-	{
-	  //both camera direction and camera plane must be rotated
-	  double oldDirX = dirX;
-	  dirX = dirX * cos(-rotSpeed) - dirY * sin(-rotSpeed);
-	  dirY = oldDirX * sin(-rotSpeed) + dirY * cos(-rotSpeed);
-	  double oldPlaneX = planeX;
-	  planeX = planeX * cos(-rotSpeed) - planeY * sin(-rotSpeed);
-	  planeY = oldPlaneX * sin(-rotSpeed) + planeY * cos(-rotSpeed);
-	}
-	//rotate to the left
-	if(keyDown(SDLK_LEFT))
-	{
-	  //both camera direction and camera plane must be rotated
-	  double oldDirX = dirX;
-	  dirX = dirX * cos(rotSpeed) - dirY * sin(rotSpeed);
-	  dirY = oldDirX * sin(rotSpeed) + dirY * cos(rotSpeed);
-	  double oldPlaneX = planeX;
-	  planeX = planeX * cos(rotSpeed) - planeY * sin(rotSpeed);
-	  planeY = oldPlaneX * sin(rotSpeed) + planeY * cos(rotSpeed);
-	} */
-  }
 }

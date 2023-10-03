@@ -1,20 +1,11 @@
+NO ./textures/mossy.png
+SO ./textures/colorstone.png
+WE ./textures/greystone.png
+EA ./textures/purplestone.png
 
+F 240,200,196
 
-
-
-NO ./path_to_the_north_texture    
-
-SO ./path_to_the_south_texture
-
-
-WE ./path_to_the_west_texture
-
-EA ./path_to_the_west_texture
-
-
-F 220,100,12
-
-C 225,30,123,
+C 225,30,123
 
 
 1011111111111111111111111
