@@ -1,14 +1,14 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   set_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/10/01 11:41:40 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
@@ -37,8 +37,8 @@ void    set_player_pos(t_game *game, int y, int x)
 {
     if (game->player_pos_count == 1)
         handle_error("Multiple player positions on map", game);
-    game->pos.y = y;
-    game->pos.x = x;
+    game->pos.y = y + 0.5;
+    game->pos.x = x + 0.5;
     game->player_pos_count++;
 }
 

@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/09/29 13:53:13 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 00:27:39 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 			rc_data->side = 1;
 		}
 		//Check if ray has hit a wall
-		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] != '0') //maybe adjust depending on the type of map
+		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] != 0) //maybe adjust depending on the type of map
 			hit = 1;
 	}
 }
@@ -89,37 +89,136 @@ void	ft_line_height(t_rc_data *rc_data, t_game *game)
 		rc_data->perpWallDist = rc_data->side_dist.x - rc_data->d_side_dist.x;
 	else          
 		rc_data->perpWallDist = rc_data->side_dist.y - rc_data->d_side_dist.y;
-	rc_data->line_height = (int)(game->screen_height / rc_data->perpWallDist);
+	rc_data->line_height = (int)(game->screen_height / rc_data->perpWallDist + 0.5);
+}
+
+int	ft_get_pixel(mlx_texture_t* texture, int x, int y)
+{
+	int	offset;
+	
+	if ((int)texture->width <= x)
+		x = texture->width - 1;
+	if ((int)texture->height <= y)
+		y = texture->height - 1;
+	offset = (y * texture->width + x) * texture->bytes_per_pixel;
+    return (texture->pixels[offset] << 24 | texture->pixels[offset + 1] << 16 | texture->pixels[offset + 2] << 8 | texture->pixels[offset + 3]);
+}
+
+int	ft_min(int	a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return b;
+}
+
+// Function to get a column x of pixels from texture
+int	*ft_get_pix_col(t_rc_data *rc_data, t_game *game)
+{
+	int		y;
+	double	step;
+	int		*pix_col;
+
+	pix_col = malloc(ft_min(rc_data->line_height, game->screen_height) * sizeof(int));
+	if (!pix_col)
+        return NULL;
+	if (rc_data->line_height <= game->screen_height)
+		step = 0;
+	else
+		step = (rc_data->line_height - game->screen_height) / 2 * 1.0 * rc_data->text->height / rc_data->line_height;
+	y = 0;
+	while (y < ft_min(rc_data->line_height, game->screen_height))
+	{
+		pix_col[y] = ft_get_pixel(rc_data->text, rc_data->text_hit, (int)(step + 0.5));
+		step += 1.0 * rc_data->text->height / rc_data->line_height;
+		y++;
+	}
+	return (pix_col);
+}
+
+void	ft_set_start_end(t_rc_data *rc_data, t_game *game)
+{
+	rc_data->start = (game->screen_height - rc_data->line_height) / 2;
+	if (rc_data->start < 0)
+		rc_data->start = 0;
+	rc_data->end = (rc_data->line_height + game->screen_height) / 2;
+	if (game->screen_height < rc_data->end)
+		rc_data->end = game->screen_height;	
+}
+
+void	ft_text_hit(t_rc_data *rc_data, t_game *game)
+{
+	double wall_hit;
+	if (rc_data->side == 0)
+		wall_hit = game->pos.y + rc_data->perpWallDist * rc_data->ray.y;
+	else
+		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.x;
+	wall_hit -= (int)(wall_hit);
+	//x coordinate on the texture
+	rc_data->text_hit = (wall_hit * rc_data->text->width);
+}
+
+static void	ft_set_text(t_rc_data *rc_data, t_game *game)
+{
+	//1. Quadrant
+	if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->NO;
+		if (rc_data->side == 0)
+			rc_data->text = game->WE;
+	}
+	//2. Quadrant
+	if (rc_data->ray.x <= 0.0 && 0.0 <= rc_data->ray.y)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->NO;
+		if (rc_data->side == 0)
+			rc_data->text = game->EA;
+	}
+	//3. Quadrant 
+	if (rc_data->ray.x <= 0.0 && rc_data->ray.y <= 0.0)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->SO;
+		if (rc_data->side == 0)
+			rc_data->text = game->EA;
+	}
+	//4. Quadrant 
+	if(0.0 <= rc_data->ray.x && rc_data->ray.y <= 0.0)
+	{
+		if (rc_data->side == 1)
+			rc_data->text = game->SO;
+		if (rc_data->side == 0)
+			rc_data->text = game->WE;
+	}
 }
 
 void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 {
 	int	y;
-	int start;
-	int end;
-	int color;
+	int	*text_col;
 
-	start = -rc_data->line_height / 2 + game->screen_height / 2;
-	if (start < 0)
-		start = 0;
-	end = rc_data->line_height / 2 + game->screen_height / 2;
-	if(end >= game->screen_height)
-		end = game->screen_height - 1;	
-	
-	color = RED;
-	if (rc_data->side == 1)
-		color = LIGHT_RED;
+	//calculate start end end of the wall
+	ft_set_start_end(rc_data, game);
+	//find the correct texture
+	ft_set_text(rc_data, game);
+	//calculate where exactly the wall was hit and where it is on the texture
+	ft_text_hit(rc_data, game);
+	//get the correct column of the texture
+	text_col = ft_get_pix_col(rc_data, game);
 	y = 0;
 	while (y < game->screen_height)
 	{
-		if (y < start)
-			mlx_put_pixel(game->mlx_img, x, y, SKY);
-		else if (end < y)
-			mlx_put_pixel(game->mlx_img, x, y, FLOOR);
+		if (y < rc_data->start)
+			mlx_put_pixel(game->mlx_img, x, y, game->c_color);
+		else if (rc_data->end <= y)
+			mlx_put_pixel(game->mlx_img, x, y, game->f_color);
 		else
-			mlx_put_pixel(game->mlx_img, x, y, color);
+			mlx_put_pixel(game->mlx_img, x, y, text_col[y - rc_data->start]);
 		y++;
 	}
+	free(text_col);
 }
 
 void	raycasting(t_game *game)
@@ -141,35 +240,3 @@ void	raycasting(t_game *game)
 		x++;
 	}
 }
-
-/* 
-	rc_data->text = *(game->text_y);
-
-    //calculate where exactly the wall was hit
-    double wall_hit;
-    if (rc_data->side == 0)
-		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.y;
-    else
-		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.x;
-    wall_hit -= floor(wall_hit); //substract the field of the wall
-
-	//x coordinate on the texture
-    int tex_x = (int)(wall_hit * (double)rc_data->text.width);
-    if((rc_data->side == 0 && rc_data->ray.x > 0) || (rc_data->side == 1 && rc_data->ray.y < 0))
-		tex_x = rc_data->text.width - tex_x - 1;
-
-      // How much to increase the texture coordinate per screen pixel
-	double step = 1.0 * (double)rc_data->text.height / (double)rc_data->line_height;
-    // Starting texture coordinate
-    double texPos = (start - game->screen_height / 2 + rc_data->line_height / 2) * step;
-	int buffer[game->screen_height];
-	for(int i = start; i < end; i++)
-	{
-		// Cast the texture coordinate to integer, and mask with (texHeight - 1) in case of overflow
-		int texY = (int)texPos & (rc_data->text.height - 1);
-		texPos += step;
-		int color = rc_data->text.pixels[rc_data->text.height * texY + tex_x];
-		//make color darker for y-sides: R, G and B byte each divided through two with a "shift" and an "and"
-		if(rc_data->side == 1) color = (color >> 1) & 8355711;
-		buffer[i] = color;
-	} */
