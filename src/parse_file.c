@@ -145,3 +145,4 @@ int parse_file(t_game *game, char *file_name)
     // check for missing texture
 	return (0);
 }
+// test
