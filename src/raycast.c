@@ -62,7 +62,7 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 	int hit; //was there a wall hit?
 
 	hit = 0;
-	while(hit == 0)
+	while(hit != 2)
 	{
 		//jump to next map square, either in x-direction, or in y-direction
 		if(rc_data->side_dist.x < rc_data->side_dist.y)
@@ -78,8 +78,13 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 			rc_data->side = 1;
 		}
 		//Check if ray has hit a wall
-		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] != 0) //maybe adjust depending on the type of map
-			hit = 1;
+		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 1) //maybe adjust depending on the type of map
+			hit = 2;
+
+			
+		// ADDED FOR DOOR DETECTION
+		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2) //maybe adjust depending on the type of map
+			hit++;
 	}
 }
 
@@ -160,6 +165,13 @@ void	ft_text_hit(t_rc_data *rc_data, t_game *game)
 
 static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 {
+	if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2) //maybe adjust depending on the type of map
+	{
+		rc_data->text = game->DOOR;
+		return;
+	}	
+
+
 	//1. Quadrant
 	if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
 	{

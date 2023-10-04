@@ -15,7 +15,7 @@
 
 #define BPP sizeof(int32_t)
 #define BUFFER_SIZE_READFILE 100
-#define TOTAL_INPUT_ELEMENTS 7
+#define TOTAL_INPUT_ELEMENTS 8
 #define FOV 0.66
 #define SKY 0x2bdafcFF
 #define	FLOOR 0x4a1e06FF
@@ -51,6 +51,7 @@ typedef struct s_textures {
 	char *SO;
 	char *WE;
 	char *EA;
+	char *DOOR;
 } t_textures;
 
 typedef struct s_rgb{
@@ -110,6 +111,7 @@ typedef struct	s_game {
 	mlx_texture_t	*SO;
 	mlx_texture_t	*WE;
 	mlx_texture_t	*EA;
+	mlx_texture_t	*DOOR;
 
 	int				c_color;
 	int				f_color;

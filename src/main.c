@@ -65,25 +65,25 @@ void	ft_move(int mov_dir, t_game *game)
 	
 	if (mov_dir == MLX_KEY_W)
     {
-    	if(game->map[(int)game->pos.y][(int)(game->pos.x + game->dir.x * MOV_SPEED)] == 0)
+    	if(game->map[(int)game->pos.y][(int)(game->pos.x + game->dir.x * MOV_SPEED)] != 1)
 	  		game->pos.x += game->dir.x * MOV_SPEED;
-		if(game->map[(int)(game->pos.y + game->dir.y * MOV_SPEED)][(int)game->pos.x] == 0)
+		if(game->map[(int)(game->pos.y + game->dir.y * MOV_SPEED)][(int)game->pos.x] != 1)
 	  		game->pos.y += game->dir.y * MOV_SPEED;
 	}
     if (mov_dir == MLX_KEY_S)
     {
-		if(game->map[(int)game->pos.y][(int)(game->pos.x - game->dir.x * MOV_SPEED)] == 0)
+		if(game->map[(int)game->pos.y][(int)(game->pos.x - game->dir.x * MOV_SPEED)] != 1)
 	  		game->pos.x -= game->dir.x * MOV_SPEED;
-		if(game->map[(int)(game->pos.y - game->dir.y * MOV_SPEED)][(int)game->pos.x] == 0)
+		if(game->map[(int)(game->pos.y - game->dir.y * MOV_SPEED)][(int)game->pos.x] != 1)
 			game->pos.y -= game->dir.y * MOV_SPEED;
     }
 	if (mov_dir == MLX_KEY_D || mov_dir == MLX_KEY_A)
 	{
 		temp_dir = game->dir;
 		ft_rotate_dir(&temp_dir, mov_dir);
-		if(game->map[(int)game->pos.y][(int)(game->pos.x + temp_dir.x * MOV_SPEED)] == 0)
+		if(game->map[(int)game->pos.y][(int)(game->pos.x + temp_dir.x * MOV_SPEED)] != 1)
 	  		game->pos.x += temp_dir.x * MOV_SPEED;
-		if(game->map[(int)(game->pos.y + temp_dir.y * MOV_SPEED)][(int)game->pos.x] == 0)
+		if(game->map[(int)(game->pos.y + temp_dir.y * MOV_SPEED)][(int)game->pos.x] != 1)
 	  		game->pos.y += temp_dir.y * MOV_SPEED;
 	}
 }
