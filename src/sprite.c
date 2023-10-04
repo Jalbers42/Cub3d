@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:37:46 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/04 16:31:13 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:44:49 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	ft_sprite(int x, t_rc_data *rc_data, t_game *game)
 	//calc height of sprite
 	sprite_height = (int)((game->screen_height) / sprite_dist - 0.5);
 	//calc start/end for drawing
-	int	start = game->screen_height / 2 - sprite_height * 1 / 3;
+	int	start = game->screen_height / 2 - sprite_height / 2;
 	if (rc_data->start < 0)
 		rc_data->start = 0;
-	int	end = game->screen_height / 2 + sprite_height * 2 / 3;
+	int	end = game->screen_height / 2 + sprite_height / 2;
 	if (game->screen_height < end)
 		end = game->screen_height;
 	int	y = 0;

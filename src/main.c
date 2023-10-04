@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/04 15:55:09 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/04 16:48:41 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,10 @@ int	main(int argc, char **argv)
 	mlx_loop_hook(game->mlx, &ft_plot, game);
 	mlx_loop(game->mlx);
 	mlx_delete_image(game->mlx, game->mlx_img);
+	mlx_delete_texture(game->NO);
+	mlx_delete_texture(game->SO);
+	mlx_delete_texture(game->WE);
+	mlx_delete_texture(game->EA);
 	destroy_game(game);
 	return (EXIT_SUCCESS);
 }
