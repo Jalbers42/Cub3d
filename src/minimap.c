@@ -12,14 +12,6 @@
 
 #include "cub3d.h"
 
-// int draw_circle()
-// {
-//     int y;
-//     int x;
-
-//     while ()
-// }
-#include <math.h>
 #define MINIMAP_MARGIN 25
 #define MINIMAP_RADIUS 80
 #define MINIMAP_ZOOM 0.12
@@ -27,13 +19,22 @@
 
 int get_start_x(int y, int radius)
 {
-    // center_x = radius;
-    // center_y = radius;
     int x;    
     int y_offset = radius - y;
 
     x = radius - sqrt(radius * radius - (y_offset * y_offset));
     return (x);
+}
+
+t_vector    get_rotated_pixel(t_game *game, t_vector minimap_pixel)
+{
+    t_vector rotated_pixel;
+
+    double radians = atan2(game->dir.y, game->dir.x) - atan2(1, 0);
+
+    rotated_pixel.x = minimap_pixel.x * cos(radians) - minimap_pixel.y * sin(radians);
+    rotated_pixel.y = minimap_pixel.x * sin(radians) + minimap_pixel.y * cos(radians);
+    return (rotated_pixel);
 }
 
 int draw_pixel(t_game *game, int y, int x)
@@ -42,10 +43,11 @@ int draw_pixel(t_game *game, int y, int x)
     int minimap_pos_x = MINIMAP_MARGIN;
     int block;
 
-    double  y_delta = (MINIMAP_RADIUS - y) * -1;
-    double  x_delta = (MINIMAP_RADIUS - x) * -1;
-    int     y_map_value = game->pos.y + (y_delta * MINIMAP_ZOOM);
-    int     x_map_value = game->pos.x + (x_delta * MINIMAP_ZOOM);
+    t_vector minimap_pixel = {(MINIMAP_RADIUS - x), (MINIMAP_RADIUS - y)};
+    t_vector    rotated_pixel = get_rotated_pixel(game, minimap_pixel);
+
+    int     y_map_value = game->pos.y + (rotated_pixel.y * MINIMAP_ZOOM);
+    int     x_map_value = game->pos.x + (rotated_pixel.x * MINIMAP_ZOOM);
 
     if (y_map_value >= 0 && y_map_value < game->map_height && x_map_value >= 0 && x_map_value < game->map_width)
         block = game->map[y_map_value][x_map_value];
