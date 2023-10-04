@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/03 14:43:04 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/03 23:12:11 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #define	FLOOR 0x4a1e06FF
 #define RED 0xFF0000FF
 #define LIGHT_RED 0xdb3232FF
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 960
+#define HEIGHT 640
 #define LEFT 0
 #define RIGHT 1
 #define ROT_SPEED 0.01
