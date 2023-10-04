@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/04 12:58:56 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/04 14:37:35 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,7 @@ void	raycasting(t_game *game)
 		ft_line_height(rc_data, game);
 		//draw line
 		ft_draw_line(x, rc_data, game);
-
+		ft_sprite(x, rc_data, game);
 		free(rc_data);
 		x++;
 	}

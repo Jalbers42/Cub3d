@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/03 23:12:11 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:37:05 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,9 @@ typedef struct	s_game {
 
 	t_vector	mouse_pos;
 
+	t_vector	sprite_pos;
+	double		sprite_width;
+
 } t_game;
 
 t_game          *init_game();
@@ -135,5 +138,6 @@ int				calc_max_height(char *map_str);
 int 			**malloc_map(t_game *game);
 int 			is_invalid_character(char input);
 int				minimap(t_game *game);
+void			ft_sprite(int x, t_rc_data *rc_data, t_game *game);
 
 #endif
