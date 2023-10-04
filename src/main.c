@@ -139,6 +139,7 @@ void	ft_plot(void* param)
 	t_game *game = param;
 
 	raycasting(game);
+	minimap(game);
 	return ;
 }
 

@@ -240,5 +240,4 @@ void	raycasting(t_game *game)
 		free(rc_data);
 		x++;
 	}
-	minimap(game);
 }
