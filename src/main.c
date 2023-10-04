@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/03 14:43:14 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/04 13:53:56 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	ft_key_hook(mlx_key_data_t keydata, void* param)
 		ft_rotate(MLX_KEY_LEFT, game);
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		ft_rotate(MLX_KEY_RIGHT, game);
-	raycasting(game);
 }
 
 void	ft_cursor_hook(double xpos, double ypos, void* param)
@@ -125,16 +124,22 @@ void	ft_cursor_hook(double xpos, double ypos, void* param)
 	}
 	game->mouse_pos.x = xpos;
 	game->mouse_pos.y = ypos;
-	raycasting(game);
 }
 
-void	ft_resize_hook(int32_t width, int32_t height, void* param)
+/* void	ft_resize_hook(int32_t width, int32_t height, void* param)
 {
 	t_game *game = param;
 
 	game->screen_width = width;
 	game->screen_height = height;
+} */
+
+void	ft_plot(void* param)
+{
+	t_game *game = param;
+
 	raycasting(game);
+	return ;
 }
 
 int	main(int argc, char **argv)
@@ -147,18 +152,20 @@ int	main(int argc, char **argv)
 	parse_file(game, argv[1]);
 
 	// MLX allows you to define its core behaviour before startup.
-	game->mlx = mlx_init(game->screen_width, game->screen_height, "cub3d", true);
+	//mlx_set_setting(mlx_settings_t setting, int32_t value);
+	game->mlx = mlx_init(game->screen_width, game->screen_height, "cub3d", false);
 	if (!game->mlx)
 		ft_error();
 	mlx_set_cursor_mode(game->mlx, 0x00034002);
 	game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
 	if (!game->mlx_img || (mlx_image_to_window(game->mlx, game->mlx_img, 0, 0) < 0))
 		ft_error();
-	
+
 	raycasting(game);
 	mlx_key_hook(game->mlx, &ft_key_hook, game);
 	mlx_cursor_hook(game->mlx, &ft_cursor_hook, game);
-	mlx_resize_hook(game->mlx, &ft_resize_hook, game);
+	//mlx_resize_hook(game->mlx, &ft_resize_hook, game);
+	mlx_loop_hook(game->mlx, &ft_plot, game);
 	mlx_loop(game->mlx);
 	mlx_delete_image(game->mlx, game->mlx_img);
 	destroy_game(game);
