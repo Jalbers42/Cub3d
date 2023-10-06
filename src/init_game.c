@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 14:26:34 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 16:05:55 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ t_game  *init_game()
 	game->sprite_pos.x = 18.5;
 	game->sprite_pos.y = 10.5;
 	game->sprite_width = 1;
-	game->sprite_text = mlx_load_png("./textures/Golden_Bokoblin.png");
+	game->sprite_text1 = mlx_load_png("./textures/sprite01.png");
+	game->sprite_text2 = mlx_load_png("./textures/sprite02.png");
+	game->sprite_text3 = mlx_load_png("./textures/sprite03.png");
+	game->sprite_text = game->sprite_text1;
 	//sky
 	game->sky_text = mlx_load_png("./textures/sky2.png");
 	game->sky_box = malloc(game->sky_text->width * sizeof(int *));

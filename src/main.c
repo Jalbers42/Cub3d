@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 14:29:17 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 17:09:04 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,14 +134,13 @@ void	ft_cursor_hook(double xpos, double ypos, void* param)
 void	ft_plot(void* param)
 {
 	t_game *game = param;
-	if (game->counter == 15)
-	{
+	if (game->counter % 15 == 0)
 		ft_move_sprite(game);
-		game->counter = 0;
-	}
 	//mlx_delete_image(game->mlx, game->mlx_img);
 	//game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
 	game->counter++;
+	if (45 == game->counter )
+		game->counter = 0;
 	raycasting(game);
 	return ;
 }
@@ -176,6 +175,7 @@ int	main(int argc, char **argv)
 	mlx_delete_texture(game->SO);
 	mlx_delete_texture(game->WE);
 	mlx_delete_texture(game->EA);
+	//delete all textures
 	destroy_game(game);
 	return (EXIT_SUCCESS);
 }

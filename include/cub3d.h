@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 14:25:37 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 18:54:12 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,9 @@ typedef struct	s_game {
 	t_vector	sprite_pos;
 	double		sprite_width;
 	mlx_texture_t	*sprite_text;
+	mlx_texture_t	*sprite_text1;
+	mlx_texture_t	*sprite_text2;
+	mlx_texture_t	*sprite_text3;
 	int			counter;
 
 	mlx_texture_t	*sky_text;

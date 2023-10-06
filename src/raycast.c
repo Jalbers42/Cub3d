@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/06 01:43:40 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 18:56:06 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,6 +231,29 @@ void	ft_draw_sky(int x, int *y, t_game *game, t_rc_data *rc_data)
 	}
 }
 
+t_rgb ft_get_rgba(int color) 
+{
+	t_rgb rgba;
+
+    // Extract individual components using bit manipulation
+    rgba.r = (color >> 24) & 0xFF;  // Red
+    rgba.g = (color >> 16) & 0xFF;  // Green
+    rgba.b = (color >> 8) & 0xFF;   // Blue
+    rgba.a = color & 0xFF;          // Alpha
+	return (rgba);
+}
+
+int	ft_blur(int color, t_rc_data *rc_data)
+{
+	t_rgb rgba;
+
+	if (rc_data->perpWallDist < 5)
+		return (color);
+	rgba = ft_get_rgba(color);
+	//rgba.a = 0;
+	return (rgba.r << 24 | rgba.g << 16 | rgba.b << 8 | rgba.a);
+}
+
 void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 {
 	int	y;
@@ -253,7 +276,7 @@ void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 		if (rc_data->end <= y)
 			mlx_put_pixel(game->mlx_img, x, y, game->f_color);
 		else
-			mlx_put_pixel(game->mlx_img, x, y, text_col[y - rc_data->start]);
+			mlx_put_pixel(game->mlx_img, x, y, ft_blur(text_col[y - rc_data->start], rc_data));
 		y++;
 	}
 	free(text_col);
@@ -264,6 +287,8 @@ void	raycasting(t_game *game)
 	t_rc_data	*rc_data;
 	int			x;
 
+	mlx_image_t *temp_img = game->mlx_img;
+	game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
 	x = 0;
 	while(x < game->screen_width)
 	{
@@ -279,5 +304,6 @@ void	raycasting(t_game *game)
 		x++;
 	}
 	minimap(game);
-	//mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
+	mlx_delete_image(game->mlx, temp_img);
+	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
 }
