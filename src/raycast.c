@@ -6,12 +6,31 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/04 14:37:35 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 01:43:40 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+void	ft_norm(t_vector vector, t_rc_data *data)
+{
+	double mag = sqrt(pow(vector.x, 2) + pow(vector.y, 2));
+	if (mag == 0)
+		mag = 1;
+	data->norm_ray.x = vector.x / mag;
+	data->norm_ray.y = vector.y / mag;
+	return ;
+}
+double ft_rad_to_deg(double radians)
+{
+    return radians * (180.0 / M_PI);
+}
+
+double	ft_vect_to_angle(t_vector vector)
+{
+    double	angle_rad = atan2(vector.y, vector.x);
+    return (ft_rad_to_deg(angle_rad) + 180);
+}
 t_rc_data	*ft_init_rc(int x, t_game *game)
 {
 	t_rc_data *rc_data;
@@ -21,6 +40,8 @@ t_rc_data	*ft_init_rc(int x, t_game *game)
 	//calculate ray position and direction
 	rc_data->ray.x = game->dir.x + game->plane.x * rc_data->cam_x;
 	rc_data->ray.y =	game->dir.y + game->plane.y * rc_data->cam_x;
+	//ft_norm(rc_data->ray, rc_data);
+	//printf("x: %i | %f\n", x, ft_vect_to_angle(rc_data->ray));
 	//calculate initial d_side_dist
 	if (rc_data->ray.x == 0)
 		rc_data->d_side_dist.x = 1e30; //prevent divion with zero
@@ -194,6 +215,22 @@ static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 	}
 }
 
+void	ft_draw_sky(int x, int *y, t_game *game, t_rc_data *rc_data)
+{
+	int *col;
+	int	pos;
+
+	pos = (int)(ft_vect_to_angle(rc_data->ray) * game->sky_text->width / 360);
+	//printf("pos %i\n", pos);
+	col = game->sky_box[pos];
+	//int y = 0;
+	while (*y < rc_data->start)
+	{
+		mlx_put_pixel(game->mlx_img, x, *y, game->sky_box[pos][*y]);
+		*y += 1;
+	}
+}
+
 void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 {
 	int	y;
@@ -211,8 +248,9 @@ void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 	while (y < game->screen_height)
 	{
 		if (y < rc_data->start)
-			mlx_put_pixel(game->mlx_img, x, y, game->c_color);
-		else if (rc_data->end <= y)
+			ft_draw_sky(x, &y, game, rc_data);
+			//mlx_put_pixel(game->mlx_img, x, y, game->c_color);
+		if (rc_data->end <= y)
 			mlx_put_pixel(game->mlx_img, x, y, game->f_color);
 		else
 			mlx_put_pixel(game->mlx_img, x, y, text_col[y - rc_data->start]);
@@ -241,4 +279,5 @@ void	raycasting(t_game *game)
 		x++;
 	}
 	minimap(game);
+	//mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
 }

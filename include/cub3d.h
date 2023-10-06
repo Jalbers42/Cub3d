@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/04 15:37:05 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 00:52:49 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef	struct s_rc_data
 	double		text_hit;
 
 	t_vector	ray;
+	t_vector	norm_ray;
 	t_vector	d_side_dist;	
 	t_vector	side_dist;
 	t_vector	field;
@@ -118,6 +119,10 @@ typedef struct	s_game {
 
 	t_vector	sprite_pos;
 	double		sprite_width;
+	mlx_texture_t	*sprite_text;
+
+	mlx_texture_t	*sky_text;
+	int				**sky_box;
 
 } t_game;
 
@@ -139,5 +144,8 @@ int 			**malloc_map(t_game *game);
 int 			is_invalid_character(char input);
 int				minimap(t_game *game);
 void			ft_sprite(int x, t_rc_data *rc_data, t_game *game);
+
+int				ft_get_pixel(mlx_texture_t* texture, int x, int y);
+int				ft_min(int	a, int b);
 
 #endif
