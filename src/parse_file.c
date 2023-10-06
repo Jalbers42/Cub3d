@@ -105,13 +105,13 @@ void	set_texture(t_game *game, mlx_texture_t	**texture, char *path)
 
 void    parse_element(t_game *game, char *element)
 {
-	char    *identifiers[7] = {"NO", "SO", "WE", "EA", "D", "F", "C"};
+	char    *identifiers[TOTAL_INPUT_ELEMENTS - 1] = {"NO", "SO", "WE", "EA", "D", "D1", "D2", "F", "C"};
 
 	game->tokens = malloc(sizeof(char *) * 2);
 	if (!insert_tokens(game->tokens, element, ' ', 2))
 		handle_error("Element has wrong number of arguments", game); 
 	int i = 0;
-	while (i < 6)
+	while (i < TOTAL_INPUT_ELEMENTS - 1)
 	{
 		if (strcmp(game->tokens[0], identifiers[i]) == 0)
 			break;
@@ -126,12 +126,16 @@ void    parse_element(t_game *game, char *element)
 	else if (i == 3)
 		set_texture(game, &game->EA, game->tokens[1]);	
 	else if (i == 4)
-		set_texture(game, &game->DOOR, game->tokens[1]);	
-	else if (i == 5 && !set_rgb(&game->colors.F, game->tokens[1]))
+		set_texture(game, &game->DOOR, game->tokens[1]);
+	else if (i == 5)
+		set_texture(game, &game->DOOR_WALL_1, game->tokens[1]);
+	else if (i == 6)
+		set_texture(game, &game->DOOR_WALL_2, game->tokens[1]);
+	else if (i == 7 && !set_rgb(&game->colors.F, game->tokens[1]))
 		handle_error("Wrong RGB value", game);
-	else if (i == 6 && !set_rgb(&game->colors.C, game->tokens[1]))
+	else if (i == 8 && !set_rgb(&game->colors.C, game->tokens[1]))
 		handle_error("Wrong RGB value", game);
-	else if (i >= 7)
+	else if (i >= 9)
 		handle_error("Incorrect element identifier", game);
 	free (game->tokens);
 	game->tokens = NULL;

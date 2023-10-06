@@ -101,5 +101,6 @@ int minimap(t_game *game)
         y++;
     }
     draw_player(game);
+    // draw_sprite(game);
     return (0);
 }

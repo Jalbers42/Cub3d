@@ -59,12 +59,12 @@ t_rc_data	*ft_init_rc(int x, t_game *game)
 
 void	ft_dda(t_rc_data *rc_data, t_game *game)
 {
-	int hit; //was there a wall hit?
+	int hit = 0;
+	int	wall = 0;
 
-	hit = 0;
-	if (get_block(game, 0, 0) == 2)
-		hit++;	
-	while(hit != 2)
+	if (get_player_block(game) == 2)
+		wall++;
+	while(hit != 1)
 	{
 		//jump to next map square, either in x-direction, or in y-direction
 		if(rc_data->side_dist.x < rc_data->side_dist.y)
@@ -79,13 +79,13 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 			rc_data->field.y += rc_data->step.y;
 			rc_data->side = 1;
 		}
-		//Check if ray has hit a wall
-		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 1) //maybe adjust depending on the type of map
-			hit = 2;
-
-		// ADDED FOR DOOR DETECTION
 		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2)
-			hit++;
+			wall++;
+		else
+			wall = 0;
+		//Check if ray has hit a wall
+		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 1 || wall == 2) //maybe adjust depending on the type of map
+			hit = 1;
 	}
 }
 
@@ -166,6 +166,16 @@ void	ft_text_hit(t_rc_data *rc_data, t_game *game)
 
 // int	is_door_wall(t_game *game, t_rc_data *rc_data)
 // {
+// 	int	bordering_block;
+// 	if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
+// 	{
+
+// 	}
+// 		else if (rc_data->ray.x <= 0.0 && 0.0 <= rc_data->ray.y)
+// 		{
+
+// 		}
+		
 // 	int	x = rc_data->field.x;
 // 	int	y = rc_data->field.y;
 
@@ -174,42 +184,84 @@ void	ft_text_hit(t_rc_data *rc_data, t_game *game)
 
 static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 {
-
 	if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2)
 		rc_data->text = game->DOOR;
-	// else if(is_door_wall(game, rc_data))
-	// 	rc_data->text = game->DOOR;
+
+	// else if(game->map[(int)rc_data->field.y][(int)rc_data->field.x + 1] == 2 && rc_data->side == 0)
+	// else if (is_door_wall(game, rc_data))
+	// 	rc_data->text = game->DOOR_WALL_1;
+
 	//1. Quadrant
 	else if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
 	{
 		if (rc_data->side == 1)
-			rc_data->text = game->NO;
+		{
+			if (game->map[(int)rc_data->field.y - 1][(int)rc_data->field.x] >= 2)
+				rc_data->text = game->DOOR_WALL_2;
+			else
+				rc_data->text = game->NO;
+		}
 		if (rc_data->side == 0)
-			rc_data->text = game->WE;
+		{
+			if (game->map[(int)rc_data->field.y][(int)rc_data->field.x - 1] >= 2)
+				rc_data->text = game->DOOR_WALL_1;
+			else
+				rc_data->text = game->WE;
+		}
 	}
 	//2. Quadrant
 	else if (rc_data->ray.x <= 0.0 && 0.0 <= rc_data->ray.y)
 	{
 		if (rc_data->side == 1)
-			rc_data->text = game->NO;
+		{
+			if (game->map[(int)rc_data->field.y - 1][(int)rc_data->field.x] >= 2)
+				rc_data->text = game->DOOR_WALL_2;
+			else
+				rc_data->text = game->NO;
+		}
 		if (rc_data->side == 0)
-			rc_data->text = game->EA;
+		{
+			if (game->map[(int)rc_data->field.y][(int)rc_data->field.x + 1] >= 2)
+				rc_data->text = game->DOOR_WALL_2;
+			else
+				rc_data->text = game->EA;
+		}
 	}
 	//3. Quadrant 
 	else if (rc_data->ray.x <= 0.0 && rc_data->ray.y <= 0.0)
 	{
 		if (rc_data->side == 1)
-			rc_data->text = game->SO;
+		{
+			if (game->map[(int)rc_data->field.y + 1][(int)rc_data->field.x] >= 2)
+				rc_data->text = game->DOOR_WALL_1;
+			else
+				rc_data->text = game->SO;
+		}
 		if (rc_data->side == 0)
-			rc_data->text = game->EA;
+		{
+			if (game->map[(int)rc_data->field.y][(int)rc_data->field.x + 1] >= 2)
+				rc_data->text = game->DOOR_WALL_2;
+			else
+				rc_data->text = game->EA;
+		}
 	}
 	//4. Quadrant 
 	else if(0.0 <= rc_data->ray.x && rc_data->ray.y <= 0.0)
 	{
 		if (rc_data->side == 1)
-			rc_data->text = game->SO;
+		{
+			if (game->map[(int)rc_data->field.y + 1][(int)rc_data->field.x] >= 2)
+				rc_data->text = game->DOOR_WALL_1;
+			else
+				rc_data->text = game->SO;
+		}
 		if (rc_data->side == 0)
-			rc_data->text = game->WE;
+		{
+			if (game->map[(int)rc_data->field.y][(int)rc_data->field.x - 1] >= 2)
+				rc_data->text = game->DOOR_WALL_1;
+			else
+				rc_data->text = game->WE;
+		}
 	}
 }
 

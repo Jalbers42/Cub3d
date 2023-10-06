@@ -42,16 +42,19 @@ void	ft_rotate(int rot_dir, t_game *game)
 	}
 }
 
-int	get_block(t_game *game, int delta_y, int delta_x)
+int	get_player_block(t_game *game)
 {
-	return (game->map[(int)game->pos.y + delta_y][(int)game->pos.x + delta_x]);
+	int	new_y = (int)game->pos.y;
+	int	new_x = (int)game->pos.x;
+
+	return (game->map[new_y][new_x]);
 }
 
 void	ft_move(int mov_dir, t_game *game)
 {
 	double	x_move = 0;
 	double	y_move = 0;
-	int		current_block = get_block(game, 0, 0);
+	int		current_block = get_player_block(game);
 	int		new_block;
 
 	if (mov_dir == MLX_KEY_W)
@@ -84,7 +87,7 @@ void	ft_move(int mov_dir, t_game *game)
 
 void	open_door(t_game *game)
 {
-	if (get_block(game, 0, 0) == 2)
+	if (get_player_block(game) == 2)
 	{
 		game->map[(int)game->pos.y][(int)game->pos.x] = 3;
 		if (game->map[(int)game->pos.y][(int)game->pos.x + 1] == 2)
@@ -96,7 +99,7 @@ void	open_door(t_game *game)
 		else if (game->map[(int)game->pos.y - 1][(int)game->pos.x] == 2)
 			game->map[(int)game->pos.y - 1][(int)game->pos.x] = 3;
 	}
-	else if (get_block(game, 0, 0) == 3)
+	else if (get_player_block(game) == 3)
 	{
 		game->map[(int)game->pos.y][(int)game->pos.x] = 2;
 		if (game->map[(int)game->pos.y][(int)game->pos.x + 1] == 3)

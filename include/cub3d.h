@@ -15,7 +15,7 @@
 
 #define BPP sizeof(int32_t)
 #define BUFFER_SIZE_READFILE 100
-#define TOTAL_INPUT_ELEMENTS 8
+#define TOTAL_INPUT_ELEMENTS 10
 #define FOV 0.66
 #define SKY 0x2bdafcFF
 #define	FLOOR 0x4a1e06FF
@@ -100,6 +100,7 @@ typedef struct	s_game {
 	t_colors	colors;
 	char		**tokens;
 
+
 	t_vector	pos; //position of character on the map
 	t_vector	dir; //looking direktion of the character on start
 	t_vector	plane; //camera plane (set to x = 0; y = 0.66)
@@ -112,6 +113,8 @@ typedef struct	s_game {
 	mlx_texture_t	*WE;
 	mlx_texture_t	*EA;
 	mlx_texture_t	*DOOR;
+	mlx_texture_t	*DOOR_WALL_1;
+	mlx_texture_t	*DOOR_WALL_2;
 
 	int				c_color;
 	int				f_color;
@@ -137,7 +140,7 @@ int				calc_max_height(char *map_str);
 int 			**malloc_map(t_game *game);
 int 			is_invalid_character(char input);
 int				minimap(t_game *game);
-int				get_block(t_game *game, int delta_y, int delta_x);
+int				get_player_block(t_game *game);
 
 
 #endif
