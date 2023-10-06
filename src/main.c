@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 01:20:27 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 14:29:17 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,26 +106,21 @@ void	ft_key_hook(mlx_key_data_t keydata, void* param)
 		ft_rotate(MLX_KEY_LEFT, game);
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		ft_rotate(MLX_KEY_RIGHT, game);
-	raycasting(game);
+	//raycasting(game);
 }
 
 void	ft_cursor_hook(double xpos, double ypos, void* param)
 {
 	t_game *game = param;
 	
-	if (game->mouse_pos.x < xpos)
+	if (game->screen_width / 2 < xpos)
 		ft_rotate(MLX_KEY_RIGHT, game);
-	if (xpos < game->mouse_pos.x)
+	if (xpos < game->screen_width / 2)
 		ft_rotate(MLX_KEY_LEFT, game);
-	if (xpos < 5 || game->screen_width - 5 < xpos)
-	{
-		xpos = game->screen_width / 2;
-		ypos = game->screen_height / 2;
-		mlx_set_mouse_pos(game->mlx, xpos, ypos);
-	}
-	game->mouse_pos.x = xpos;
-	game->mouse_pos.y = ypos;
-	raycasting(game);
+	xpos = game->screen_width / 2;
+	ypos = game->screen_height / 2;
+	mlx_set_mouse_pos(game->mlx, xpos, ypos);
+	//raycasting(game);
 }
 
 /* void	ft_resize_hook(int32_t width, int32_t height, void* param)
@@ -139,8 +134,14 @@ void	ft_cursor_hook(double xpos, double ypos, void* param)
 void	ft_plot(void* param)
 {
 	t_game *game = param;
+	if (game->counter == 15)
+	{
+		ft_move_sprite(game);
+		game->counter = 0;
+	}
 	//mlx_delete_image(game->mlx, game->mlx_img);
 	//game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
+	game->counter++;
 	raycasting(game);
 	return ;
 }
@@ -168,7 +169,7 @@ int	main(int argc, char **argv)
 	mlx_key_hook(game->mlx, &ft_key_hook, game);
 	mlx_cursor_hook(game->mlx, &ft_cursor_hook, game);
 	//mlx_resize_hook(game->mlx, &ft_resize_hook, game);
-	//mlx_loop_hook(game->mlx, &ft_plot, game);
+	mlx_loop_hook(game->mlx, &ft_plot, game);
 	mlx_loop(game->mlx);
 	mlx_delete_image(game->mlx, game->mlx_img);
 	mlx_delete_texture(game->NO);

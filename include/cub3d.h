@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 00:52:49 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/06 14:25:37 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 #define HEIGHT 640
 #define LEFT 0
 #define RIGHT 1
-#define ROT_SPEED 0.01
+#define ROT_SPEED 0.03
 #define MOV_SPEED 0.2
 
 #include "MLX42/MLX42.h"
@@ -120,6 +120,7 @@ typedef struct	s_game {
 	t_vector	sprite_pos;
 	double		sprite_width;
 	mlx_texture_t	*sprite_text;
+	int			counter;
 
 	mlx_texture_t	*sky_text;
 	int				**sky_box;
@@ -147,5 +148,6 @@ void			ft_sprite(int x, t_rc_data *rc_data, t_game *game);
 
 int				ft_get_pixel(mlx_texture_t* texture, int x, int y);
 int				ft_min(int	a, int b);
+void			ft_move_sprite(t_game *game);
 
 #endif
