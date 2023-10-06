@@ -62,6 +62,8 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 	int hit; //was there a wall hit?
 
 	hit = 0;
+	if (get_block(game, 0, 0) == 2)
+		hit++;	
 	while(hit != 2)
 	{
 		//jump to next map square, either in x-direction, or in y-direction
@@ -81,9 +83,8 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 1) //maybe adjust depending on the type of map
 			hit = 2;
 
-			
 		// ADDED FOR DOOR DETECTION
-		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2) //maybe adjust depending on the type of map
+		if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2)
 			hit++;
 	}
 }
@@ -163,17 +164,23 @@ void	ft_text_hit(t_rc_data *rc_data, t_game *game)
 	rc_data->text_hit = (wall_hit * rc_data->text->width);
 }
 
+// int	is_door_wall(t_game *game, t_rc_data *rc_data)
+// {
+// 	int	x = rc_data->field.x;
+// 	int	y = rc_data->field.y;
+
+// 	if (game->map[y + 1][x] == )
+// }
+
 static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 {
-	if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2) //maybe adjust depending on the type of map
-	{
+
+	if(game->map[(int)rc_data->field.y][(int)rc_data->field.x] == 2)
 		rc_data->text = game->DOOR;
-		return;
-	}	
-
-
+	// else if(is_door_wall(game, rc_data))
+	// 	rc_data->text = game->DOOR;
 	//1. Quadrant
-	if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
+	else if (0.0 <= rc_data->ray.x && 0.0 <= rc_data->ray.y)
 	{
 		if (rc_data->side == 1)
 			rc_data->text = game->NO;
@@ -181,7 +188,7 @@ static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 			rc_data->text = game->WE;
 	}
 	//2. Quadrant
-	if (rc_data->ray.x <= 0.0 && 0.0 <= rc_data->ray.y)
+	else if (rc_data->ray.x <= 0.0 && 0.0 <= rc_data->ray.y)
 	{
 		if (rc_data->side == 1)
 			rc_data->text = game->NO;
@@ -189,7 +196,7 @@ static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 			rc_data->text = game->EA;
 	}
 	//3. Quadrant 
-	if (rc_data->ray.x <= 0.0 && rc_data->ray.y <= 0.0)
+	else if (rc_data->ray.x <= 0.0 && rc_data->ray.y <= 0.0)
 	{
 		if (rc_data->side == 1)
 			rc_data->text = game->SO;
@@ -197,7 +204,7 @@ static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 			rc_data->text = game->EA;
 	}
 	//4. Quadrant 
-	if(0.0 <= rc_data->ray.x && rc_data->ray.y <= 0.0)
+	else if(0.0 <= rc_data->ray.x && rc_data->ray.y <= 0.0)
 	{
 		if (rc_data->side == 1)
 			rc_data->text = game->SO;

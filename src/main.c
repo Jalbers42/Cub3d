@@ -42,49 +42,71 @@ void	ft_rotate(int rot_dir, t_game *game)
 	}
 }
 
-void	ft_rotate_dir(t_vector *dir, int rot_dir)
+int	get_block(t_game *game, int delta_y, int delta_x)
 {
-	t_vector	old_dir;
-
-	old_dir = *dir;
-	if (rot_dir == MLX_KEY_D)
-	{
-		dir->x = -old_dir.y;
-		dir->y = old_dir.x;
-	}
-	if (rot_dir == MLX_KEY_A)
-	{
-		dir->x = old_dir.y;
-		dir->y = -old_dir.x;
-	}
+	return (game->map[(int)game->pos.y + delta_y][(int)game->pos.x + delta_x]);
 }
 
 void	ft_move(int mov_dir, t_game *game)
 {
-	t_vector	temp_dir;
-	
+	double	x_move = 0;
+	double	y_move = 0;
+	int		current_block = get_block(game, 0, 0);
+	int		new_block;
+
 	if (mov_dir == MLX_KEY_W)
     {
-    	if(game->map[(int)game->pos.y][(int)(game->pos.x + game->dir.x * MOV_SPEED)] != 1)
-	  		game->pos.x += game->dir.x * MOV_SPEED;
-		if(game->map[(int)(game->pos.y + game->dir.y * MOV_SPEED)][(int)game->pos.x] != 1)
-	  		game->pos.y += game->dir.y * MOV_SPEED;
+		y_move += game->pos.y + game->dir.y * MOV_SPEED;
+		x_move += game->pos.x + game->dir.x * MOV_SPEED;
 	}
     if (mov_dir == MLX_KEY_S)
     {
-		if(game->map[(int)game->pos.y][(int)(game->pos.x - game->dir.x * MOV_SPEED)] != 1)
-	  		game->pos.x -= game->dir.x * MOV_SPEED;
-		if(game->map[(int)(game->pos.y - game->dir.y * MOV_SPEED)][(int)game->pos.x] != 1)
-			game->pos.y -= game->dir.y * MOV_SPEED;
+		y_move += game->pos.y - game->dir.y * MOV_SPEED;
+		x_move += game->pos.x - game->dir.x * MOV_SPEED;
     }
-	if (mov_dir == MLX_KEY_D || mov_dir == MLX_KEY_A)
+	if (mov_dir == MLX_KEY_D)
 	{
-		temp_dir = game->dir;
-		ft_rotate_dir(&temp_dir, mov_dir);
-		if(game->map[(int)game->pos.y][(int)(game->pos.x + temp_dir.x * MOV_SPEED)] != 1)
-	  		game->pos.x += temp_dir.x * MOV_SPEED;
-		if(game->map[(int)(game->pos.y + temp_dir.y * MOV_SPEED)][(int)game->pos.x] != 1)
-	  		game->pos.y += temp_dir.y * MOV_SPEED;
+		y_move += game->pos.y + game->dir.x * MOV_SPEED;
+		x_move += game->pos.x - game->dir.y * MOV_SPEED;
+	}	
+	if (mov_dir == MLX_KEY_A)
+	{
+		y_move += game->pos.y - game->dir.x * MOV_SPEED;
+		x_move += game->pos.x + game->dir.y * MOV_SPEED;
+	}
+	new_block = game->map[(int)y_move][(int)game->pos.x];
+	if(new_block != 1 && !(current_block == 2 && new_block == 2))
+	  	game->pos.y = y_move;
+	new_block = game->map[(int)game->pos.y][(int)x_move];	
+	if(new_block != 1 && !(current_block == 2 && new_block == 2))
+	  	game->pos.x = x_move;
+}
+
+void	open_door(t_game *game)
+{
+	if (get_block(game, 0, 0) == 2)
+	{
+		game->map[(int)game->pos.y][(int)game->pos.x] = 3;
+		if (game->map[(int)game->pos.y][(int)game->pos.x + 1] == 2)
+			game->map[(int)game->pos.y][(int)game->pos.x + 1] = 3;
+		else if (game->map[(int)game->pos.y][(int)game->pos.x - 1] == 2)
+			game->map[(int)game->pos.y][(int)game->pos.x - 1] = 3;
+		else if (game->map[(int)game->pos.y + 1][(int)game->pos.x] == 2)
+			game->map[(int)game->pos.y + 1][(int)game->pos.x] = 3;
+		else if (game->map[(int)game->pos.y - 1][(int)game->pos.x] == 2)
+			game->map[(int)game->pos.y - 1][(int)game->pos.x] = 3;
+	}
+	else if (get_block(game, 0, 0) == 3)
+	{
+		game->map[(int)game->pos.y][(int)game->pos.x] = 2;
+		if (game->map[(int)game->pos.y][(int)game->pos.x + 1] == 3)
+			game->map[(int)game->pos.y][(int)game->pos.x + 1] = 2;
+		else if (game->map[(int)game->pos.y][(int)game->pos.x - 1] == 3)
+			game->map[(int)game->pos.y][(int)game->pos.x - 1] = 2;
+		else if (game->map[(int)game->pos.y + 1][(int)game->pos.x] == 3)
+			game->map[(int)game->pos.y + 1][(int)game->pos.x] = 2;
+		else if (game->map[(int)game->pos.y - 1][(int)game->pos.x] == 3)
+			game->map[(int)game->pos.y - 1][(int)game->pos.x] = 2;
 	}
 }
 
@@ -106,6 +128,8 @@ void	ft_key_hook(mlx_key_data_t keydata, void* param)
 		ft_rotate(MLX_KEY_LEFT, game);
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_RIGHT))
 		ft_rotate(MLX_KEY_RIGHT, game);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_SPACE))
+		open_door(game);
 }
 
 void	ft_cursor_hook(double xpos, double ypos, void* param)

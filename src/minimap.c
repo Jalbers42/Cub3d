@@ -99,7 +99,7 @@ int minimap(t_game *game)
             x++;
         }
         y++;
-    } 
+    }
     draw_player(game);
     return (0);
 }

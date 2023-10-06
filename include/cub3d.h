@@ -26,7 +26,7 @@
 #define LEFT 0
 #define RIGHT 1
 #define ROT_SPEED 0.01
-#define MOV_SPEED 0.2
+#define MOV_SPEED 0.5
 
 #include "MLX42/MLX42.h"
 #include "libft.h"
@@ -137,5 +137,7 @@ int				calc_max_height(char *map_str);
 int 			**malloc_map(t_game *game);
 int 			is_invalid_character(char input);
 int				minimap(t_game *game);
+int				get_block(t_game *game, int delta_y, int delta_x);
+
 
 #endif
