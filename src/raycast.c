@@ -267,7 +267,12 @@ static void	ft_set_text(t_rc_data *rc_data, t_game *game)
 				rc_data->text = game->SO;
 		}
 		if (rc_data->side == 0)
-			rc_data->text = game->WE;
+		{
+			if (game->map[(int)rc_data->field.y][(int)rc_data->field.x - 1] >= 2)
+				rc_data->text = game->DOOR_WALL_1;
+			else
+				rc_data->text = game->WE;
+		}
 	}
 }
 

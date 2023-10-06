@@ -78,12 +78,14 @@ void	ft_move(int mov_dir, t_game *game)
 		x_move += game->pos.x + game->dir.y * MOV_SPEED;
 	}
 	new_block = game->map[(int)y_move][(int)game->pos.x];
-	// if(new_block != 1 && !(current_block == 2 && new_block == 2))
-	if(new_block != 1 && !(current_block == 2))
+	if ((int)y_move == (int)game->pos.y)
+	  	game->pos.y = y_move;
+	else if(new_block != 1 && !(new_block == 2 && current_block == 2))
 	  	game->pos.y = y_move;
 	new_block = game->map[(int)game->pos.y][(int)x_move];
-	// if(new_block != 1 && !(current_block == 2 && new_block == 2))
-	if(new_block != 1 && !(current_block == 2))
+	if ((int)x_move == (int)game->pos.x)
+	  	game->pos.x = x_move;
+	else if(new_block != 1 && !(new_block == 2 && current_block == 2))
 	  	game->pos.x = x_move;
 }
 
