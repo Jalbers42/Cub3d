@@ -96,54 +96,49 @@ int   set_rgb(t_rgb *color, char *str)
 	return (1);
 }
 
+void	set_texture(t_game *game, mlx_texture_t	**texture, char *path)
+{
+	*texture = mlx_load_png(path);
+	if (!*texture)
+		handle_error("Error opening texture PNG.", game);
+}
+
 void    parse_element(t_game *game, char *element)
 {
-	char    *identifiers[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+	char    *identifiers[TOTAL_INPUT_ELEMENTS - 1] = {"NO", "SO", "WE", "EA", "D", "D1", "D2", "F", "C"};
 
 	game->tokens = malloc(sizeof(char *) * 2);
 	if (!insert_tokens(game->tokens, element, ' ', 2))
 		handle_error("Element has wrong number of arguments", game); 
 	int i = 0;
-	while (i < 6)
+	while (i < TOTAL_INPUT_ELEMENTS - 1)
 	{
 		if (strcmp(game->tokens[0], identifiers[i]) == 0)
 			break;
 		i++;
 	}
 	if (i == 0)
-		game->textures.NO = game->tokens[1];
+		set_texture(game, &game->NO, game->tokens[1]);	
 	else if (i == 1)
-		game->textures.SO = game->tokens[1];
+		set_texture(game, &game->SO, game->tokens[1]);	
 	else if (i == 2)
-		game->textures.WE = game->tokens[1];
+		set_texture(game, &game->WE, game->tokens[1]);	
 	else if (i == 3)
-		game->textures.EA = game->tokens[1];
-	else if (i == 4 && !set_rgb(&game->colors.F, game->tokens[1]))
+		set_texture(game, &game->EA, game->tokens[1]);	
+	else if (i == 4)
+		set_texture(game, &game->DOOR, game->tokens[1]);
+	else if (i == 5)
+		set_texture(game, &game->DOOR_WALL_1, game->tokens[1]);
+	else if (i == 6)
+		set_texture(game, &game->DOOR_WALL_2, game->tokens[1]);
+	else if (i == 7 && !set_rgb(&game->colors.F, game->tokens[1]))
 		handle_error("Wrong RGB value", game);
-	else if (i == 5 && !set_rgb(&game->colors.C, game->tokens[1]))
+	else if (i == 8 && !set_rgb(&game->colors.C, game->tokens[1]))
 		handle_error("Wrong RGB value", game);
-	else if (i >= 6)
+	else if (i >= 9)
 		handle_error("Incorrect element identifier", game);
 	free (game->tokens);
 	game->tokens = NULL;
-}
-
-void    ft_load_text(t_game *game)
-{
-	//load textures
-	game->NO = mlx_load_png(game->textures.NO);
-	if (!game->NO)
-		handle_error("Error opening texture PNG.", game);
-	game->SO = mlx_load_png(game->textures.SO);
-	if (!game->SO)
-		handle_error("Error opening texture PNG.", game);
-	game->WE = mlx_load_png(game->textures.WE);
-	if (!game->WE)
-		handle_error("Error opening texture PNG.", game);
-	game->EA = mlx_load_png(game->textures.EA);
-	if (!game->EA)
-		handle_error("Error opening texture PNG.", game);
-	return ;
 }
 
 int parse_file(t_game *game, char *file_name)
@@ -163,6 +158,5 @@ int parse_file(t_game *game, char *file_name)
 	}
 	game->c_color = game->colors.C.r << 24 | game->colors.C.g << 16 | game->colors.C.b << 8 | game->colors.C.a;
 	game->f_color = game->colors.F.r << 24 | game->colors.F.g << 16 | game->colors.F.b << 8 | game->colors.F.a;
-	ft_load_text(game);
 	return (0);
 }
