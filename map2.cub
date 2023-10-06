@@ -7,7 +7,7 @@ D ./textures/door.png
 D1 ./textures/doorWall1.png
 D2 ./textures/doorWall2.png
 
-F 220,100,0
+F 68,68,68
 
 C 68,68,68
 
