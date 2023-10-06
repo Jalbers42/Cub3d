@@ -46,8 +46,6 @@ t_game  *init_game()
 	game->mouse_pos.y = HEIGHT / 2;
 	//sprite
 	game->counter = 0;
-	game->sprite_pos.x = 18.5;
-	game->sprite_pos.y = 10.5;
 	game->sprite_width = 1;
 	game->sprite_text1 = mlx_load_png("./textures/sprite01.png");
 	game->sprite_text2 = mlx_load_png("./textures/sprite02.png");

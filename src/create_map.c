@@ -24,6 +24,12 @@ int set_map_value(t_game *game, int y, int x, char input)
         set_player_details(game, y, x, input);
         game->map[y][x] = 0;
     }
+    else if (input == 'X')
+    {
+        game->sprite_pos.y = y + 0.5;
+        game->sprite_pos.x = x + 0.5;
+        game->map[y][x] = 0;
+    }
     else
         game->map[y][x] = input - '0';
     return (0);

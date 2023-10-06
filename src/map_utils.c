@@ -52,7 +52,7 @@ int	calc_max_height(char *map_str)
 
 int is_invalid_character(char input)
 {
-    if (input != '1' && input != '0' && input != '2' && input != ' ' && input != 'N' && input != 'S' && input != 'W' && input != 'E')
+    if (input != '1' && input != '0' && input != '2' && input != ' ' && input != 'N' && input != 'S' && input != 'W' && input != 'E'&& input != 'X')
         return (1);
     return (0);
 }
