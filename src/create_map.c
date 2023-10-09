@@ -1,87 +1,66 @@
-/******************************************************************************/
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*                                                      :+:      :+:    :+:   */
+/*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*                                                  +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Jalbers42                                         #+#    #+#             */
-/*   https://github.com/Jalbers42                     ###   ###########       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/09/27 15:08:42 by ycardona         ###   ########.fr       */
 /*                                                                            */
-/******************************************************************************/
+/* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	calc_max_width(char *file_str)
+int set_map_value(t_game *game, int y, int x, char input)
 {
-    int max_width = 0;
-    int current_width;
-	int	i = 0;
     
-	while (file_str[i])
+    if (is_invalid_character(input))
+        handle_error("Invalid map character", game);
+    else if (input == ' ')
+        game->map[y][x] = 0;
+    else if (input == 'N' || input == 'S' || input == 'E' || input == 'W')
     {
-        current_width = 0;
-        while (file_str[i] && file_str[i] != '\n')
-        {
-            current_width++;
-            i++;
-        }
-        if (current_width > max_width)
-            max_width = current_width;
-        if (file_str[i])
-            i++;
+        set_player_details(game, y, x, input);
+        game->map[y][x] = 0;
     }
-	return (max_width);
-}
-
-int	calc_max_height(char *file_str)
-{
-	int		i;
-	int		count;
-
-	i = 0;
-	count = 1;
-	while (file_str[i])
-	{
-		if (file_str[i] == '\n')
-			count++;
-		i++;
-	}
-	return (count);
-}
-
-char    **malloc_map(t_game *game)
-{
-    char **map = malloc(game->map_height * sizeof(char*));
-    int i = 0;
-    while (i < game->map_height)
-        map[i++] = malloc(game->map_width * sizeof(char));
-    return (map);
+    else if (input == 'X')
+    {
+        game->sprite_pos.y = y + 0.5;
+        game->sprite_pos.x = x + 0.5;
+        game->map[y][x] = 0;
+    }
+    else
+        game->map[y][x] = input - '0';
+    return (0);
 }
 
 void    fill_map(t_game *game, char *file_content)
 {
-    int i = 0;
     int y = 0;
     int x;
+    int i = 0;
 
     while (y < game->map_height)
     {
         x = 0;
-        while (x < game->map_width && file_content[i] != '\n')
-            game->map[y][x++] = file_content[i++];
+        while (x < game->map_width && file_content[i] && file_content[i] != '\n')
+            set_map_value(game, y, x++, file_content[i++]);
         while (x < game->map_width)
-            game->map[y][x++] = ' ';
+            game->map[y][x++] = 0;
         i++;
         y++;
     }
+    if (game->player_pos_count == 0)
+        handle_error("No player starting position found on map", game);
 }
 
-int create_map(t_game *game, char *file_content)
+int create_map(t_game *game, char *map_str)
 {
-    game->map_width = calc_max_width(file_content);
-    game->map_height = calc_max_height(file_content);
+    game->map_width = calc_max_width(map_str);
+    game->map_height = calc_max_height(map_str);
     game->map = malloc_map(game);
-    fill_map(game, file_content);
+    fill_map(game, map_str);
+    check_wall(game);
     return (0);
 }

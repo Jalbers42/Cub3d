@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   read_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 20:36:22 by josephalber       #+#    #+#             */
-/*   Updated: 2023/01/19 18:35:23 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:41:15 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int ft_strlen(char *str)
+/* int ft_strlen(char *str)
 {
     int i;
 
@@ -20,7 +20,7 @@ int ft_strlen(char *str)
 	while (str[i] != '\0')
 		i++;
     return (i);
-}
+} */
 
 int	is_cub_file(char *filename)
 {
