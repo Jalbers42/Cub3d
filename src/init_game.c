@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 16:05:55 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:42:58 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,20 @@ t_game  *init_game()
 	game->screen_height = HEIGHT;
 	game->mouse_pos.x = WIDTH / 2;
 	game->mouse_pos.y = HEIGHT / 2;
+	game->finished = false;
 	//sprite
 	game->counter = 0;
 	game->sprite_width = 1;
-	game->sprite_text1 = mlx_load_png("./textures/sprite01.png");
-	game->sprite_text2 = mlx_load_png("./textures/sprite02.png");
-	game->sprite_text3 = mlx_load_png("./textures/sprite03.png");
+	game->sprite_text1 = mlx_load_png("./textures/spriteA.png");
+	game->sprite_text2 = mlx_load_png("./textures/spriteB.png");
+	game->sprite_text3 = mlx_load_png("./textures/spriteE.png");
 	game->sprite_text = game->sprite_text1;
+	//finger
+	game->finger_left_text = mlx_load_png("./textures/middle_left.png");
+	game->finger_right_text = mlx_load_png("./textures/middle_right.png");
+	
 	//sky
-	game->sky_text = mlx_load_png("./textures/sky2.png");
+	game->sky_text = mlx_load_png("./textures/sky4.png");
 	game->sky_box = malloc(game->sky_text->width * sizeof(int *));
 	int	x = 0;
 	while (x < (int)game->sky_text->width)

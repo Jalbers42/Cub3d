@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:37:46 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/06 20:55:38 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:47:33 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,8 @@ void	ft_sprite(int x, t_rc_data *rc_data, t_game *game)
 	int	y = 0;
 	while (y < game->screen_height)
 	{
-		if (start <= y && y < end && pix_col[y - start] !=-1744795393)
+		//printf("%i\n", pix_col[y - start]);
+		if (start <= y && y < end && pix_col[y - start] != 11141120)
 			mlx_put_pixel(game->mlx_img, x, y, pix_col[y - start]);
 		y++;
 	}

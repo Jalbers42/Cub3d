@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/06 20:54:39 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:46:28 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,8 +347,6 @@ void	raycasting(t_game *game)
 	t_rc_data	*rc_data;
 	int			x;
 
-	mlx_image_t *temp_img = game->mlx_img;
-	game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
 	x = 0;
 	while(x < game->screen_width)
 	{
@@ -363,7 +361,5 @@ void	raycasting(t_game *game)
 		free(rc_data);
 		x++;
 	}
-	minimap(game);
-	mlx_delete_image(game->mlx, temp_img);
-	mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
+	//minimap(game);
 }

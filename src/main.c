@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 17:09:04 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:44:46 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,14 @@ void	ft_key_hook(mlx_key_data_t keydata, void* param)
 
 	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
 		mlx_close_window(game->mlx);
+	if (mlx_is_key_down(game->mlx, MLX_KEY_N))
+		game->finger = MLX_KEY_N;
+	else if (mlx_is_key_down(game->mlx, MLX_KEY_M))
+		game->finger = MLX_KEY_M;
+	else
+		game->finger = 0;
+	if (game->finished == true)
+		return ;
 	if (mlx_is_key_down(game->mlx, MLX_KEY_W))
 		ft_move(MLX_KEY_W, game);
 	else if (mlx_is_key_down(game->mlx, MLX_KEY_S))
@@ -161,18 +169,57 @@ void	ft_cursor_hook(double xpos, double ypos, void* param)
 	game->screen_height = height;
 } */
 
+int	ft_game_over(t_game *game)
+{
+	mlx_texture_t *text;
+	unsigned int	x;
+	unsigned int	y;
+	
+	if (ft_dist(game->pos, game->sprite_pos) < 0.4)
+	{
+		x = 0;
+		text = mlx_load_png("./textures/game_over2.png");
+		while (x < text->width)
+		{
+			y = 0;
+			while (y < text->height)
+			{
+				if (ft_get_pixel(text, x, y) != 0)
+					mlx_put_pixel(game->mlx_img, x + 250, y + 175, ft_get_pixel(text, x, y));
+				y++;
+			}
+			x++;
+		}
+		//mlx_delete_image(game->mlx, temp_img);
+		//mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
+		game->finished = true;
+		return (1);
+	}
+	else 
+		return (0);
+}
+
 void	ft_plot(void* param)
 {
 	t_game *game = param;
-	if (game->counter % 15 == 0)
-		ft_move_sprite(game);
-	//mlx_delete_image(game->mlx, game->mlx_img);
-	//game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
-	game->counter++;
-	if (45 == game->counter )
-		game->counter = 0;
-	raycasting(game);
-	minimap(game);
+	
+	if (ft_game_over(game) == 0)
+	{
+		mlx_image_t *temp_img = game->mlx_img;
+		game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
+		if (game->counter % 15 == 0)
+			ft_move_sprite(game);
+		//mlx_delete_image(game->mlx, game->mlx_img);
+		//game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
+		game->counter++;
+		if (30 == game->counter)
+			game->counter = 0;
+		raycasting(game);
+		minimap(game);
+		ft_finger(game->finger, game);
+		mlx_delete_image(game->mlx, temp_img);
+		mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
+	}
 	return ;
 }
 

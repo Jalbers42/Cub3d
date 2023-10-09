@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/06 18:54:12 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 10:42:19 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,11 @@ typedef struct	s_game {
 	mlx_texture_t	*sky_text;
 	int				**sky_box;
 
+	mlx_texture_t	*finger_left_text;
+	mlx_texture_t	*finger_right_text;
+	int				finger;
+
+	bool	finished;
 } t_game;
 
 t_game          *init_game();
@@ -157,7 +162,11 @@ void			ft_sprite(int x, t_rc_data *rc_data, t_game *game);
 int				ft_get_pixel(mlx_texture_t* texture, int x, int y);
 int				ft_min(int	a, int b);
 void			ft_move_sprite(t_game *game);
-int				get_player_block(t_game *game);
+double			ft_dist(t_vector p_a, t_vector p_b);
+int				ft_get_a(int rgba);
 
+void			ft_finger(int mlx_key, t_game *game);
+
+int				get_player_block(t_game *game);
 
 #endif
