@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/09 10:42:19 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 16:37:36 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,8 @@ typedef struct	s_game {
 	t_vector	pos; //position of character on the map
 	t_vector	dir; //looking direktion of the character on start
 	t_vector	plane; //camera plane (set to x = 0; y = 0.66)
-	
+	int			counter; //counting frames
+
 	mlx_image_t		*mlx_img;
 	mlx_t			*mlx;
 
@@ -122,13 +123,12 @@ typedef struct	s_game {
 
 	t_vector	mouse_pos;
 
-	t_vector	sprite_pos;
-	double		sprite_width;
+	t_vector		sprite_pos;
+	double			sprite_width;
 	mlx_texture_t	*sprite_text;
 	mlx_texture_t	*sprite_text1;
 	mlx_texture_t	*sprite_text2;
 	mlx_texture_t	*sprite_text3;
-	int			counter;
 
 	mlx_texture_t	*sky_text;
 	int				**sky_box;
@@ -164,9 +164,27 @@ int				ft_min(int	a, int b);
 void			ft_move_sprite(t_game *game);
 double			ft_dist(t_vector p_a, t_vector p_b);
 int				ft_get_a(int rgba);
+t_rgb			ft_get_rgba(int color);
+t_vector		ft_intersect(t_vector sprite_pos, t_vector plane, t_vector pos, t_vector ray);
+int				ft_vect_dir(t_vector vector, t_vector p_a, t_vector p_b);
+void			ft_set_text(t_rc_data *rc_data, t_game *game);
+void			ft_draw_line(int x, t_rc_data *rc_data, t_game *game);
+int				ft_blur(int color, double dist);
+int				ft_min(int	a, int b);
+
+void			ft_draw_sky(int x, int *y, t_game *game, t_rc_data *rc_data);
+t_rc_data		*ft_init_rc(int x, t_game *game);
+
 
 void			ft_finger(int mlx_key, t_game *game);
 
 int				get_player_block(t_game *game);
+void			ft_cursor_hook(double xpos, double ypos, void* param);
+void			ft_key_hook(mlx_key_data_t keydata, void* param);
+void			ft_plot(void* param);
+void			ft_move(int mov_dir, t_game *game);
+void			open_door(t_game *game);
+int				ft_game_over(t_game *game);
+
 
 #endif
