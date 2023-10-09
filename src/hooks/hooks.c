@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:42:47 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 16:23:29 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:21:57 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,14 @@ void	ft_plot(void *param)
 		temp_img = game->mlx_img;
 		game->mlx_img = mlx_new_image(game->mlx, \
 		game->screen_width, game->screen_height);
-		if (game->counter % 15 == 0)
-			ft_move_sprite(game);
 		game->counter++;
 		if (30 == game->counter)
 			game->counter = 0;
 		raycasting(game);
-		minimap(game);
+		if (game->counter % 15 == 0)
+			ft_move_sprite(game);
 		ft_finger(game->finger, game);
+		minimap(game);
 		mlx_delete_image(game->mlx, temp_img);
 		mlx_image_to_window(game->mlx, game->mlx_img, 0, 0);
 	}
