@@ -13,7 +13,7 @@
 #include "cub3d.h"
 
 // Exit the program as failure.
-static void ft_error(void)
+static void	ft_error(void)
 {
 	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
 	exit(EXIT_FAILURE);
@@ -21,9 +21,11 @@ static void ft_error(void)
 
 int	get_player_block(t_game *game)
 {
-	int	new_y = (int)game->pos.y;
-	int	new_x = (int)game->pos.x;
+	int	new_y;
+	int	new_x;
 
+	new_y = (int)game->pos.y;
+	new_x = (int)game->pos.x;
 	return (game->map[new_y][new_x]);
 }
 
@@ -47,10 +49,7 @@ void	ft_delete(t_game *game)
 	mlx_delete_texture(game->game_over_text);
 	i = 0;
 	while (i < (int)game->sky_text->width)
-	{
-		free(game->sky_box[i]);
-		i++;
-	}
+		free(game->sky_box[i++]);
 	free(game->sky_box);
 	mlx_delete_texture(game->sky_text);
 	mlx_terminate(game->mlx);
@@ -59,18 +58,21 @@ void	ft_delete(t_game *game)
 
 int	main(int argc, char **argv)
 {
-	t_game *game;
+	t_game	*game;
 
 	if (argc != 2)
 		handle_error("Wrong number of arguments", NULL);
 	game = init_game();
 	parse_file(game, argv[1]);
-	game->mlx = mlx_init(game->screen_width, game->screen_height, "cub3d", false);
+	game->mlx = mlx_init(game->screen_width,
+			game->screen_height, "cub3d", false);
 	if (!game->mlx)
 		ft_error();
 	mlx_set_cursor_mode(game->mlx, 0x00034002);
-	game->mlx_img = mlx_new_image(game->mlx, game->screen_width, game->screen_height);
-	if (!game->mlx_img || (mlx_image_to_window(game->mlx, game->mlx_img, 0, 0) < 0))
+	game->mlx_img = mlx_new_image(game->mlx,
+			game->screen_width, game->screen_height);
+	if (!game->mlx_img
+		|| (mlx_image_to_window(game->mlx, game->mlx_img, 0, 0) < 0))
 		ft_error();
 	mlx_key_hook(game->mlx, &ft_key_hook, game);
 	mlx_cursor_hook(game->mlx, &ft_cursor_hook, game);

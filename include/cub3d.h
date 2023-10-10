@@ -28,6 +28,14 @@
 #define ROT_SPEED 0.03
 #define MOV_SPEED 0.2
 
+#define MINIMAP_MARGIN 25
+#define MINIMAP_RADIUS 80
+#define MINIMAP_ZOOM 0.12
+#define MINIMAP_PLAYER_RADIUS 2
+#define MINIMAP_PLAYER_COLOR 15669971
+#define MINIMAP_BG_COLOR 1778473
+#define MINIMAP_WALL_COLOR 16699713
+
 #include "MLX42/MLX42.h"
 #include "libft.h"
 #include <stdlib.h>
@@ -140,6 +148,9 @@ typedef struct	s_game {
 	bool	finished;
 	mlx_texture_t	*game_over_text;
 
+	int		minimap_pos_x;
+	int		minimap_pos_y;
+
 } t_game;
 
 t_game          *init_game();
@@ -187,6 +198,9 @@ void			ft_plot(void* param);
 void			ft_move(int mov_dir, t_game *game);
 void			open_door(t_game *game);
 int				ft_game_over(t_game *game);
-
+void			set_texture(t_game *game, mlx_texture_t	**texture, char *path);
+int				set_rgb(t_game *game, t_rgb *color, char *str);
+void			print_map(t_game *game, int **map);
+int				insert_tokens(char **tokens, char *str, char delimeter, int number_of_elements);
 
 #endif
