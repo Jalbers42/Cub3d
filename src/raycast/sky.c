@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 12:58:30 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 13:02:20 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:03:00 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	ft_draw_sky(int x, int *y, t_game *game, t_rc_data *rc_data)
 	int	pos;
 
 	pos = (int)(ft_vect_to_angle(rc_data->ray) * game->sky_text->width / 360);
+	if ((int)game->sky_text->width <= pos)
+		pos -= game->sky_text->width;
+	//printf("pos %i\n", pos);
 	col = game->sky_box[pos];
 	while (*y < rc_data->start)
 	{

@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 13:03:41 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 14:52:48 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:27:03 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ t_rc_data	*ft_init_rc(int x, t_game *game)
 	rc_data = malloc(sizeof(t_rc_data));
 	ft_init_ray(x, game, rc_data);
 	if (rc_data->ray.x == 0)
-		rc_data->d_side_dist.x = 1e30;
+		rc_data->d_side_dist.x = 2; //1e30;
 	else
 		rc_data->d_side_dist.x = fabs(1 / rc_data->ray.x);
 	if (rc_data->ray.y == 0)
-		rc_data->d_side_dist.y = 1e30;
+		rc_data->d_side_dist.y = 2; //1e30;
 	else
 		rc_data->d_side_dist.y = fabs(1 / rc_data->ray.y);
 	rc_data->field.x = (int)(game->pos.x);

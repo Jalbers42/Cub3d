@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 20:21:39 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/10 13:24:07 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_game	*init_game(void)
 	ft_init_sprite(game);
 	ft_init_sky(game);
 	game->game_over_text = mlx_load_png("./textures/game_over2.png");
+	game->finger = 0;
 	game->finger_left_text = mlx_load_png("./textures/middle_left.png");
 	game->finger_right_text = mlx_load_png("./textures/middle_right.png");
 	return (game);

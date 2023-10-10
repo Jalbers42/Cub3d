@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:16:43 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 12:31:27 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/10 14:16:24 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,13 @@ t_vector pos, t_vector ray)
 	double		m_2;
 
 	if (plane.x == 0)
-		plane.x = 1e30;
-	m_1 = plane.y / plane.x;
+		m_1 = 1;//plane.x = 1e30;
+	else
+		m_1 = plane.y / plane.x;
 	if (ray.x == 0)
-		ray.x = 1e30;
-	m_2 = ray.y / ray.x;
+		m_2 = 1;//ray.x = 1e30;
+	else
+		m_2 = ray.y / ray.x;
 	intersect.x = (m_1 * sprite_pos.x - m_2 * pos.x + pos.y - sprite_pos.y) \
 	/ (m_1 - m_2);
 	intersect.y = m_1 * (intersect.x - sprite_pos.x) + sprite_pos.y;
