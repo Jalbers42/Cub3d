@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/09 21:08:37 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:13:07 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,6 +187,5 @@ void			ft_plot(void* param);
 void			ft_move(int mov_dir, t_game *game);
 void			open_door(t_game *game);
 int				ft_game_over(t_game *game);
-
 
 #endif
