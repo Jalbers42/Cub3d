@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/09 16:48:35 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:22:31 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	ft_delete(t_game *game)
 	mlx_delete_texture(game->sky_text);
 	mlx_delete_texture(game->finger_left_text);
 	mlx_delete_texture(game->finger_right_text);
+	mlx_delete_texture(game->game_over_text);
 	i = 0;
 	while (i < (int)game->sky_text->width)
 	{

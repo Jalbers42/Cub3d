@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/09 16:37:36 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 21:08:37 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 #define	FLOOR 0x4a1e06FF
 #define RED 0xFF0000FF
 #define LIGHT_RED 0xdb3232FF
-#define WIDTH 960
-#define HEIGHT 640
+#define WIDTH 1280
+#define HEIGHT 720
 #define LEFT 0
 #define RIGHT 1
 #define ROT_SPEED 0.03
@@ -138,6 +138,8 @@ typedef struct	s_game {
 	int				finger;
 
 	bool	finished;
+	mlx_texture_t	*game_over_text;
+
 } t_game;
 
 t_game          *init_game();

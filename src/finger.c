@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 19:02:32 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 16:56:56 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:18:45 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	ft_draw_left(t_game *game)
 		while (y < text->height)
 		{
 			if (ft_get_pixel(text, x, y) != 0)
-				mlx_put_pixel(game->mlx_img, x + 275, y \
-				+ 350, ft_get_pixel(text, x, y));
+				mlx_put_pixel(game->mlx_img, x + game->screen_width / 3, \
+				y + game->screen_height - text->height, ft_get_pixel(text, x, y));
 			y++;
 		}
 		x++;
@@ -48,8 +48,8 @@ void	ft_draw_right(t_game *game)
 		while (y < text->height)
 		{
 			if (ft_get_pixel(text, x, y) != 0)
-				mlx_put_pixel(game->mlx_img, x + 475, y \
-				+ 350, ft_get_pixel(text, x, y));
+				mlx_put_pixel(game->mlx_img, x + game->screen_width * 2 / 3 - text->width, \
+				y + game->screen_height - text->height, ft_get_pixel(text, x, y));
 			y++;
 		}
 		x++;

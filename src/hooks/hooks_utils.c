@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:47:41 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 16:05:19 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/09 20:26:22 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,15 +95,15 @@ int	ft_game_over(t_game *game)
 	if (ft_dist(game->pos, game->sprite_pos) < 0.4)
 	{
 		x = 0;
-		text = mlx_load_png("./textures/game_over2.png");
+		text = game->game_over_text;
 		while (x < text->width)
 		{
 			y = 0;
 			while (y < text->height)
 			{
 				if (ft_get_pixel(text, x, y) != 0)
-					mlx_put_pixel(game->mlx_img, x + 250, y + 175, \
-					ft_get_pixel(text, x, y));
+					mlx_put_pixel(game->mlx_img, x + (game->screen_width - text->width) / 2, \
+					y + (game->screen_height - text->height) / 2, ft_get_pixel(text, x, y));
 				y++;
 			}
 			x++;
