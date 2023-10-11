@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 11:16:43 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/10 18:21:01 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:51:58 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ t_vector pos, t_vector ray)
 	double		m_2;
 
 	if (plane.x == 0)
-		m_1 = sprite_pos.y;//plane.x = 1e30;
+		m_1 = FOV;
 	else
 		m_1 = plane.y / plane.x;
 	if (ray.x == 0)
-		m_2 = pos.y;//ray.x = 1e30;
+		return (sprite_pos);
 	else
 		m_2 = ray.y / ray.x;
 	intersect.x = (m_1 * sprite_pos.x - m_2 * pos.x + pos.y - sprite_pos.y) \
@@ -57,17 +57,6 @@ t_vector pos, t_vector ray)
 	intersect.y = m_1 * (intersect.x - sprite_pos.x) + sprite_pos.y;
 	return (intersect);
 }
-/* t_vector	ft_intersect(t_vector p_1, t_vector v_1, t_vector p_2, t_vector v_2)
-{
-	t_vector	intersection;
-	
-
-    // Verwende die Parametergleichung der ersten Geraden, um den Schnittpunkt zu finden
-    intersection.x = ((v_1.y * (v_2.x * p_2.x - v_2.x * p_1.x)) - (v_2.y * (v_1.x * p_2.x - v_1.x * p_1.x))) / (v_1.x * v_2.y - v_2.x * v_1.y); 
-    intersection.y = (v_1.x * (v_2.y * p_2.y - v_2.y * p_1.y) - (v_2.x * (v_1.y * p_2.y - v_1.y * p_1.y))) / (v_1.x * v_2.y - v_2.x * v_1.y); 
-
-    return intersection;
-} */
 
 double	ft_dist(t_vector p_a, t_vector p_b)
 {
