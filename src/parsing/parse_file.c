@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/03 00:37:00 by ycardona         ###   ########.fr       */
+/*   Created: 2023/10/11 14:46:02 by jalbers           #+#    #+#             */
+/*   Updated: 2023/10/11 14:46:03 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

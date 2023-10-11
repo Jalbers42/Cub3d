@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/10 13:39:03 by ycardona         ###   ########.fr       */
+/*   Created: 2023/10/11 14:44:38 by jalbers           #+#    #+#             */
+/*   Updated: 2023/10/11 14:44:39 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,32 +29,32 @@ int	get_player_block(t_game *game)
 	return (game->map[new_y][new_x]);
 }
 
-void	ft_delete(t_game *game)
-{
-	int	i;
+// void	ft_delete(t_game *game)
+// {
+// 	int	i;
 
-	mlx_delete_image(game->mlx, game->mlx_img);
-	mlx_delete_texture(game->NO);
-	mlx_delete_texture(game->SO);
-	mlx_delete_texture(game->WE);
-	mlx_delete_texture(game->EA);
-	mlx_delete_texture(game->DOOR);
-	mlx_delete_texture(game->DOOR_WALL_1);
-	mlx_delete_texture(game->DOOR_WALL_2);
-	mlx_delete_texture(game->sprite_text1);
-	mlx_delete_texture(game->sprite_text2);
-	mlx_delete_texture(game->sprite_text3);
-	mlx_delete_texture(game->finger_left_text);
-	mlx_delete_texture(game->finger_right_text);
-	mlx_delete_texture(game->game_over_text);
-	i = 0;
-	while (i < (int)game->sky_text->width)
-		free(game->sky_box[i++]);
-	free(game->sky_box);
-	mlx_delete_texture(game->sky_text);
-	mlx_terminate(game->mlx);
-	destroy_game(game);
-}
+// 	mlx_delete_image(game->mlx, game->mlx_img);
+// 	mlx_delete_texture(game->NO);
+// 	mlx_delete_texture(game->SO);
+// 	mlx_delete_texture(game->WE);
+// 	mlx_delete_texture(game->EA);
+// 	mlx_delete_texture(game->DOOR);
+// 	mlx_delete_texture(game->DOOR_WALL_1);
+// 	mlx_delete_texture(game->DOOR_WALL_2);
+// 	mlx_delete_texture(game->sprite_text1);
+// 	mlx_delete_texture(game->sprite_text2);
+// 	mlx_delete_texture(game->sprite_text3);
+// 	mlx_delete_texture(game->finger_left_text);
+// 	mlx_delete_texture(game->finger_right_text);
+// 	mlx_delete_texture(game->game_over_text);
+// 	i = 0;
+// 	while (i < (int)game->sky_text->width)
+// 		free(game->sky_box[i++]);
+// 	free(game->sky_box);
+// 	mlx_delete_texture(game->sky_text);
+// 	mlx_terminate(game->mlx);
+// 	destroy_game(game);
+// }
 
 int	main(int argc, char **argv)
 {
@@ -78,6 +78,7 @@ int	main(int argc, char **argv)
 	mlx_cursor_hook(game->mlx, &ft_cursor_hook, game);
 	mlx_loop_hook(game->mlx, &ft_plot, game);
 	mlx_loop(game->mlx);
-	ft_delete(game);
+	// ft_delete(game);
+	destroy_game(game);
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/09 16:48:53 by ycardona         ###   ########.fr       */
+/*   Created: 2023/10/11 14:46:51 by jalbers           #+#    #+#             */
+/*   Updated: 2023/10/11 14:46:52 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

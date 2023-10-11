@@ -55,11 +55,29 @@ static void	ft_init_sky(t_game *game)
 	}
 }
 
+void	init_textures(t_game *game)
+{
+	game->NO = NULL;
+	game->SO = NULL;
+	game->WE = NULL;
+	game->EA = NULL;
+	game->DOOR = NULL;
+	game->DOOR_WALL_1 = NULL;
+	game->DOOR_WALL_2 = NULL;
+	game->sprite_text1 = NULL;
+	game->sprite_text2 = NULL;
+	game->sprite_text3 = NULL;
+	game->finger_left_text = NULL;
+	game->finger_right_text = NULL;
+	game->game_over_text = NULL;
+}
+
 t_game	*init_game(void)
 {
 	t_game	*game;
 
 	game = malloc(sizeof(t_game));
+	game->mlx = NULL;
 	game->map = NULL;
 	game->tokens = NULL;
 	game->player_pos_count = 0;
@@ -69,6 +87,7 @@ t_game	*init_game(void)
 	game->mouse_pos.y = HEIGHT / 2;
 	game->finished = false;
 	game->counter = 0;
+	init_textures(game);
 	ft_init_sprite(game);
 	ft_init_sky(game);
 	game->game_over_text = mlx_load_png("./textures/game_over2.png");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 15:08:42 by ycardona         ###   ########.fr       */
+/*   Created: 2023/10/11 14:46:39 by jalbers           #+#    #+#             */
+/*   Updated: 2023/10/11 14:46:40 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

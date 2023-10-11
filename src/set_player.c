@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_player.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/10 13:46:07 by ycardona         ###   ########.fr       */
+/*   Created: 2023/10/11 14:44:51 by jalbers           #+#    #+#             */
+/*   Updated: 2023/10/11 14:44:52 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
