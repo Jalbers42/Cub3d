@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/10 17:02:21 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:35:11 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 }
 
 void	ft_line_height(t_rc_data *rc_data, t_game *game)
-{	
+{
 	if (rc_data->side == 0)
 		rc_data->perpWallDist = rc_data->side_dist.x - rc_data->d_side_dist.x;
 	else

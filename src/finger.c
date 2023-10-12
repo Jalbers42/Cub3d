@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   finger.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:45:00 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/11 14:45:01 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 10:29:08 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_draw_left(t_game *game)
 		{
 			if (ft_get_pixel(text, x, y) != 0)
 				mlx_put_pixel(game->mlx_img, x + game->screen_width / 3, \
-				y + game->screen_height - text->height, ft_get_pixel(text, x, y));
+				y + game->screen_height - text->height, \
+				ft_get_pixel(text, x, y));
 			y++;
 		}
 		x++;
@@ -48,8 +49,10 @@ void	ft_draw_right(t_game *game)
 		while (y < text->height)
 		{
 			if (ft_get_pixel(text, x, y) != 0)
-				mlx_put_pixel(game->mlx_img, x + game->screen_width * 2 / 3 - text->width, \
-				y + game->screen_height - text->height, ft_get_pixel(text, x, y));
+				mlx_put_pixel(game->mlx_img, x + \
+				game->screen_width * 2 / 3 - text->width, \
+				y + game->screen_height - text->height, \
+				ft_get_pixel(text, x, y));
 			y++;
 		}
 		x++;

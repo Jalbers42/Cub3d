@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:44:38 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/11 14:44:39 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 10:30:07 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	main(int argc, char **argv)
 	mlx_cursor_hook(game->mlx, &ft_cursor_hook, game);
 	mlx_loop_hook(game->mlx, &ft_plot, game);
 	mlx_loop(game->mlx);
-	// ft_delete(game);
 	destroy_game(game);
 	return (EXIT_SUCCESS);
 }

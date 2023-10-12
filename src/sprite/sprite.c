@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:37:46 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/10 18:21:25 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/11 12:59:05 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,6 @@ void	ft_sprite(int x, t_rc_data *rc_data, t_game *game)
 	rc_data->ray);
 	d_is = ft_dist(inter, game->sprite_pos);
 	d_sp = ft_dist(game->sprite_pos, game->pos);
-	/* if(rc_data->ray.x == 0)
-		printf("$$$$$$$$$$$$$$$$$\n");	
-	printf("inter %f %f | d_is %f | d_sp %f\n", inter.x, inter.y, d_is, d_sp);
-	if(rc_data->ray.x == 0)
-		printf("$$$$$$$$$$$$$$$$$\n");	 */
 	if ((game->sprite_width / 2.0) <= d_is
 		|| rc_data->perpWallDist < d_sp
 		|| ft_vect_dir(rc_data->ray, game->pos, inter) != 1)

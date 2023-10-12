@@ -6,7 +6,7 @@
 /*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 15:47:41 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 20:26:22 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 10:33:09 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	ft_calc_move(t_vector *move, int mov_dir, t_game *game)
 	{
 		move->y = game->pos.y + game->dir.x * MOV_SPEED;
 		move->x = game->pos.x - game->dir.y * MOV_SPEED;
-	}	
+	}
 	if (mov_dir == MLX_KEY_A)
 	{
 		move->y = game->pos.y - game->dir.x * MOV_SPEED;
@@ -94,22 +94,21 @@ int	ft_game_over(t_game *game)
 
 	if (ft_dist(game->pos, game->sprite_pos) < 0.4)
 	{
-		x = 0;
 		text = game->game_over_text;
-		while (x < text->width)
+		x = -1;
+		while (++x < text->width)
 		{
-			y = 0;
-			while (y < text->height)
+			y = -1;
+			while (++y < text->height)
 			{
 				if (ft_get_pixel(text, x, y) != 0)
-					mlx_put_pixel(game->mlx_img, x + (game->screen_width - text->width) / 2, \
-					y + (game->screen_height - text->height) / 2, ft_get_pixel(text, x, y));
-				y++;
+					mlx_put_pixel(game->mlx_img, \
+					x + (game->screen_width - text->width) / 2, \
+					y + (game->screen_height - text->height) / 2, \
+					ft_get_pixel(text, x, y));
 			}
-			x++;
 		}
-		game->finished = true;
-		return (1);
+		return (game->finished = true);
 	}
 	else
 		return (0);
