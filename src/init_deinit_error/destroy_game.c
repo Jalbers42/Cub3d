@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_game.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:45:19 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/11 14:45:20 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:02:05 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	destroy_game(t_game *game)
 {
 	int	i;
 
+	if (!game)
+		return ;
 	if (game->file_content != NULL)
 		free(game->file_content);
 	if (game->tokens != NULL)
@@ -60,11 +62,14 @@ void	destroy_game(t_game *game)
 		mlx_delete_image(game->mlx, game->mlx_img);
 	delete_textures(game);
 	delete_sprite(game);
-	i = 0;
-	while (i < (int)game->sky_text->width)
-		free(game->sky_box[i++]);
-	free(game->sky_box);
-	mlx_delete_texture(game->sky_text);
+	if (game->sky_box)
+	{
+		i = 0;
+		while (i < (int)game->sky_text->width)
+			free(game->sky_box[i++]);
+		free(game->sky_box);
+		mlx_delete_texture(game->sky_text);
+	}
 	if (game->mlx)
 		mlx_terminate(game->mlx);
 	free(game);
