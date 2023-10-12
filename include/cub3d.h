@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:37:46 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/12 12:46:48 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:00:26 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ typedef struct s_vector {
 }	t_vector;
 
 typedef struct s_textures {
-	char	*NO;
-	char	*SO;
-	char	*WE;
-	char	*EA;
-	char	*DOOR;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*door;
 }	t_textures;
 
 typedef struct s_rgb{
@@ -69,8 +69,8 @@ typedef struct s_rgb{
 }	t_rgb;
 
 typedef struct s_colors{
-	t_rgb	F;
-	t_rgb	C;
+	t_rgb	f;
+	t_rgb	c;
 }	t_colors;
 
 typedef struct s_rc_data
@@ -80,7 +80,7 @@ typedef struct s_rc_data
 	int				start;
 	int				end;
 	double			cam_x;
-	double			perpWallDist;
+	double			perp_wall_dist;
 	double			text_hit;
 	t_vector		ray;
 	t_vector		norm_ray;
@@ -108,13 +108,13 @@ typedef struct s_game {
 	int				counter;
 	mlx_image_t		*mlx_img;
 	mlx_t			*mlx;
-	mlx_texture_t	*NO;
-	mlx_texture_t	*SO;
-	mlx_texture_t	*WE;
-	mlx_texture_t	*EA;
-	mlx_texture_t	*DOOR;
-	mlx_texture_t	*DOOR_WALL_1;
-	mlx_texture_t	*DOOR_WALL_2;
+	mlx_texture_t	*no;
+	mlx_texture_t	*so;
+	mlx_texture_t	*we;
+	mlx_texture_t	*ea;
+	mlx_texture_t	*door;
+	mlx_texture_t	*door_wall_1;
+	mlx_texture_t	*door_wall_2;
 	int				c_color;
 	int				f_color;
 	t_vector		mouse_pos;
