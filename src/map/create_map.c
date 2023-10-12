@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_map.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:46:39 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/11 14:46:40 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:10:51 by ycardona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	fill_map(t_game *game, char *file_content)
 
 int	create_map(t_game *game, char *map_str)
 {
+	if (!*map_str)
+		handle_error("no map", game);
 	game->map_width = calc_max_width(map_str);
 	game->map_height = calc_max_height(map_str);
 	game->map = malloc_map(game);

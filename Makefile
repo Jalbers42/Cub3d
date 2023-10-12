@@ -1,4 +1,4 @@
-NAME	:= Game
+NAME	:= cub3D
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror 
 LIBMLX	:= ./lib/MLX42
