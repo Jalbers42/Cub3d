@@ -6,7 +6,7 @@
 /*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:46:02 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/12 11:49:23 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 13:13:09 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,23 @@ void	parse_element(t_game *game, char *element)
 	if (!insert_tokens(game->tokens, element, ' ', 2))
 		handle_error("Element has wrong number of arguments", game); 
 	if (strcmp(game->tokens[0], "NO") == 0)
-		set_texture(game, &game->NO, game->tokens[1]);
+		set_texture(game, &game->no, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "SO") == 0)
-		set_texture(game, &game->SO, game->tokens[1]);
+		set_texture(game, &game->so, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "WE") == 0)
-		set_texture(game, &game->WE, game->tokens[1]);
+		set_texture(game, &game->we, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "EA") == 0)
-		set_texture(game, &game->EA, game->tokens[1]);
+		set_texture(game, &game->ea, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "D") == 0)
-		set_texture(game, &game->DOOR, game->tokens[1]);
+		set_texture(game, &game->door, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "D1") == 0)
-		set_texture(game, &game->DOOR_WALL_1, game->tokens[1]);
+		set_texture(game, &game->door_wall_1, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "D2") == 0)
-		set_texture(game, &game->DOOR_WALL_2, game->tokens[1]);
+		set_texture(game, &game->door_wall_2, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "F") == 0)
-		set_rgb(game, &game->colors.F, game->tokens[1]);
+		set_rgb(game, &game->colors.f, game->tokens[1]);
 	else if (strcmp(game->tokens[0], "C") == 0)
-		set_rgb(game, &game->colors.C, game->tokens[1]);
+		set_rgb(game, &game->colors.c, game->tokens[1]);
 	else
 		handle_error("Incorrect element identifier", game);
 	free (game->tokens);
@@ -114,9 +114,9 @@ int	parse_file(t_game *game, char *file_name)
 			create_map(game, element);
 		element_index++;
 	}
-	game->c_color = game->colors.C.r << 24 | game->colors.C.g << 16 
-		| game->colors.C.b << 8 | game->colors.C.a;
-	game->f_color = game->colors.F.r << 24 | game->colors.F.g << 16 
-		| game->colors.F.b << 8 | game->colors.F.a;
+	game->c_color = game->colors.c.r << 24 | game->colors.c.g << 16 
+		| game->colors.c.b << 8 | game->colors.c.a;
+	game->f_color = game->colors.f.r << 24 | game->colors.f.g << 16 
+		| game->colors.f.b << 8 | game->colors.f.a;
 	return (0);
 }

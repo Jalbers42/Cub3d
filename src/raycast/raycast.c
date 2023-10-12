@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/12 10:35:11 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:50 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ void	ft_dda(t_rc_data *rc_data, t_game *game)
 void	ft_line_height(t_rc_data *rc_data, t_game *game)
 {
 	if (rc_data->side == 0)
-		rc_data->perpWallDist = rc_data->side_dist.x - rc_data->d_side_dist.x;
+		rc_data->perp_wall_dist = rc_data->side_dist.x - rc_data->d_side_dist.x;
 	else
-		rc_data->perpWallDist = rc_data->side_dist.y - rc_data->d_side_dist.y;
-	rc_data->line_height = (int)(game->screen_height / rc_data->perpWallDist \
+		rc_data->perp_wall_dist = rc_data->side_dist.y - rc_data->d_side_dist.y;
+	rc_data->line_height = (int)(game->screen_height / rc_data->perp_wall_dist \
 	+ 0.5);
 }
 

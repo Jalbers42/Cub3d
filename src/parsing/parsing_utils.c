@@ -6,7 +6,7 @@
 /*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:46:12 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/11 14:46:13 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 13:04:59 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	set_rgb(t_game *game, t_rgb *color, char *str)
 
 void	set_texture(t_game *game, mlx_texture_t	**texture, char *path)
 {
+	if (*texture != NULL)
+		handle_error("Texture defined twice in file.", game);
 	*texture = mlx_load_png(path);
 	if (!*texture)
 		handle_error("Error opening texture PNG.", game);

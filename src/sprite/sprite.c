@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sprite.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 14:37:46 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/11 12:59:05 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:50 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_sprite(int x, t_rc_data *rc_data, t_game *game)
 	d_is = ft_dist(inter, game->sprite_pos);
 	d_sp = ft_dist(game->sprite_pos, game->pos);
 	if ((game->sprite_width / 2.0) <= d_is
-		|| rc_data->perpWallDist < d_sp
+		|| rc_data->perp_wall_dist < d_sp
 		|| ft_vect_dir(rc_data->ray, game->pos, inter) != 1)
 		return ;
 	rc_data->line_height = (int)((game->screen_height) / d_sp);

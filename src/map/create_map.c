@@ -6,7 +6,7 @@
 /*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:46:39 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/12 12:25:48 by jalbers          ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:50 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	fill_map(t_game *game, char *file_content)
 		y++;
 	}
 	if (game->player_pos_count == 0)
-		handle_error("No player starting position found on map", game);
+		handle_error("no player starting position found on map", game);
 }
 
 int	create_map(t_game *game, char *map_str)

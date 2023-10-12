@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   destroy_game.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:45:19 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/12 12:02:05 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:50 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 void	delete_textures(t_game *game)
 {
-	if (game->NO)
-		mlx_delete_texture(game->NO);
-	if (game->SO)
-		mlx_delete_texture(game->SO);
-	if (game->WE)
-		mlx_delete_texture(game->WE);
-	if (game->EA)
-		mlx_delete_texture(game->EA);
-	if (game->DOOR)
-		mlx_delete_texture(game->DOOR);
-	if (game->DOOR_WALL_1)
-		mlx_delete_texture(game->DOOR_WALL_1);
-	if (game->DOOR_WALL_2)
-		mlx_delete_texture(game->DOOR_WALL_2);
+	if (game->no)
+		mlx_delete_texture(game->no);
+	if (game->so)
+		mlx_delete_texture(game->so);
+	if (game->we)
+		mlx_delete_texture(game->we);
+	if (game->ea)
+		mlx_delete_texture(game->ea);
+	if (game->door)
+		mlx_delete_texture(game->door);
+	if (game->door_wall_1)
+		mlx_delete_texture(game->door_wall_1);
+	if (game->door_wall_2)
+		mlx_delete_texture(game->door_wall_2);
 	if (game->finger_left_text)
 		mlx_delete_texture(game->finger_left_text);
 	if (game->finger_right_text)

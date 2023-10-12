@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 14:53:58 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/09 16:17:13 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:50 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	ft_text_hit(t_rc_data *rc_data, t_game *game)
 	double	wall_hit;
 
 	if (rc_data->side == 0)
-		wall_hit = game->pos.y + rc_data->perpWallDist * rc_data->ray.y;
+		wall_hit = game->pos.y + rc_data->perp_wall_dist * rc_data->ray.y;
 	else
-		wall_hit = game->pos.x + rc_data->perpWallDist * rc_data->ray.x;
+		wall_hit = game->pos.x + rc_data->perp_wall_dist * rc_data->ray.x;
 	wall_hit -= (int)(wall_hit);
 	rc_data->text_hit = (wall_hit * rc_data->text->width);
 }
@@ -92,7 +92,7 @@ void	ft_draw_line(int x, t_rc_data *rc_data, t_game *game)
 			mlx_put_pixel(game->mlx_img, x, y, game->f_color);
 		else
 			mlx_put_pixel(game->mlx_img, x, y, \
-			ft_blur(text_col[y - rc_data->start], rc_data->perpWallDist));
+			ft_blur(text_col[y - rc_data->start], rc_data->perp_wall_dist));
 		y++;
 	}
 	free(text_col);

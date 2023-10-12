@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_game.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 11:15:48 by ycardona          #+#    #+#             */
-/*   Updated: 2023/10/10 13:24:07 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:14:17 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static void	ft_init_sky(t_game *game)
 
 void	init_textures(t_game *game)
 {
-	game->NO = NULL;
-	game->SO = NULL;
-	game->WE = NULL;
-	game->EA = NULL;
-	game->DOOR = NULL;
-	game->DOOR_WALL_1 = NULL;
-	game->DOOR_WALL_2 = NULL;
+	game->no = NULL;
+	game->so = NULL;
+	game->we = NULL;
+	game->ea = NULL;
+	game->door = NULL;
+	game->door_wall_1 = NULL;
+	game->door_wall_2 = NULL;
 	game->sprite_text1 = NULL;
 	game->sprite_text2 = NULL;
 	game->sprite_text3 = NULL;
@@ -80,6 +80,7 @@ t_game	*init_game(void)
 	game->mlx = NULL;
 	game->map = NULL;
 	game->tokens = NULL;
+	game->file_content = NULL;
 	game->player_pos_count = 0;
 	game->screen_width = WIDTH;
 	game->screen_height = HEIGHT;

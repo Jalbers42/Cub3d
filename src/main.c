@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycardona <ycardona@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: jalbers <jalbers@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 14:44:38 by jalbers           #+#    #+#             */
-/*   Updated: 2023/10/12 10:30:07 by ycardona         ###   ########.fr       */
+/*   Updated: 2023/10/12 13:11:50 by jalbers          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	get_player_block(t_game *game)
 // 	mlx_delete_texture(game->SO);
 // 	mlx_delete_texture(game->WE);
 // 	mlx_delete_texture(game->EA);
-// 	mlx_delete_texture(game->DOOR);
-// 	mlx_delete_texture(game->DOOR_WALL_1);
-// 	mlx_delete_texture(game->DOOR_WALL_2);
+// 	mlx_delete_texture(game->door);
+// 	mlx_delete_texture(game->door_wall_1);
+// 	mlx_delete_texture(game->door_wall_2);
 // 	mlx_delete_texture(game->sprite_text1);
 // 	mlx_delete_texture(game->sprite_text2);
 // 	mlx_delete_texture(game->sprite_text3);
